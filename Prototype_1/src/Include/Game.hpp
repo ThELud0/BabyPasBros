@@ -11,7 +11,6 @@ class Game : private sf::NonCopyable
 	public:
 								Game();
 		void					run();
-		
 
 	private:
 		void					processEvents();
@@ -24,12 +23,15 @@ class Game : private sf::NonCopyable
 		static const sf::Time	TimePerFrame;
 		
 
-		sf::RectangleShape		windowBounds{ sf::Vector2f(640,480) };
+		std::map<std::string,sf::Texture> babyTextures;
+
+		sf::RectangleShape		windowBounds{ sf::Vector2f(1024,768) };
+		sf::RectangleShape		testCloud{ sf::Vector2f(280,70)};
 		int						nbCercles = 10;
-		Player					ludo{ 40, sf::Color::Blue, 280, 200 };
-		sf::View				altView{sf::Vector2f(320.f,240.f),sf::Vector2f(640,480)};
-		sf::RenderWindow		mWindow{sf::VideoMode{640, 480}, "SFML Application", sf::Style::Close};
-		sf::Texture				mTexture;
+		Player					ludo{ 400,300 };
+		sf::View				altView{sf::Vector2f(512.f,384.f),sf::Vector2f(1024,768)};
+		sf::RenderWindow		mWindow{sf::VideoMode{1024,768}, "SFML Application", sf::Style::Close};
+	
         std::vector<RoundTarget> mTargets;
 		sf::Font				mFont;
 		sf::Text				mStatisticsText;

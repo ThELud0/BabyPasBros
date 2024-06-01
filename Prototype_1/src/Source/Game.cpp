@@ -55,7 +55,6 @@ Game::Game()
 	mFont.loadFromFile("media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setPosition(5.f, 5.f);
-	
 	mStatisticsText.setCharacterSize(10);
 }
 
@@ -64,11 +63,39 @@ void Game::run()
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	mWindow.setVerticalSyncEnabled(true);
+	
+	sf::Texture	babyLeft;
+	sf::Texture	babyRight;
+	sf::Texture groundCloud;
+
+	if (!babyLeft.loadFromFile("media/babygoleft.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+	
+	if (!babyRight.loadFromFile("media/babygoright.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
+	if (!groundCloud.loadFromFile("media/nuage.png")) {
+		std::cout << "texture load failed\n";
+
+		exit(1);
+	}
+
+	babyTextures.insert(std::make_pair("babyleft", babyLeft));
+	babyTextures.insert(std::make_pair("babyright", babyRight));
+
+	ludo.setTexture(babyLeft);
 
 	initialize(mTargets);
+
 	windowBounds.setFillColor(sf::Color::Black);
 	windowBounds.setOutlineColor(sf::Color::White);
 	windowBounds.setOutlineThickness(2);
+	testCloud.setTexture(&groundCloud);
+	testCloud.setPosition(0, mWindow.getSize().y - testCloud.getSize().y/1.5);
 
 	while (mWindow.isOpen())
 	{
@@ -164,7 +191,7 @@ void Game::update(sf::Time elapsedTime)
 
 	}
 
-	ludo.update(elapsedTime,altView);
+	ludo.update(elapsedTime,altView, babyTextures);
 	
 }
 
@@ -174,6 +201,7 @@ void Game::render()
 	mWindow.clear();
 	mWindow.setView(altView);
 	mWindow.draw(windowBounds);
+	mWindow.draw(testCloud);
 	for (auto const &target : mTargets) {
 		target.drawCurrent(mWindow);
 	}
@@ -196,7 +224,7 @@ void Game::updateStatistics(sf::Time elapsedTime)
 		mStatisticsText.setString(
 			"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
 			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us\n" +
-			"Player window pos = " + toString(static_cast<int>(ludo.getShape().getPosition().x)) + "  " + toString(static_cast<int>(ludo.getShape().getPosition().y))
+			"Player window pos = " + toString(static_cast<int>(ludo.getSelf().getPosition().x)) + "  " + toString(static_cast<int>(ludo.getSelf().getPosition().y))
 		
 		
 		);

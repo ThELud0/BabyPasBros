@@ -1,22 +1,19 @@
-#include "SFML/Graphics.hpp"
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
+#include "Entity.hpp"
 
 
-
-class Player {
+class Player : Entity {
 public:
-    Player(float radius, sf::Color color, float x, float y);
+    Player(float x, float y);
+    void                    setTexture(const sf::Texture& initTexture);
     void					drawCurrent(sf::RenderWindow& window) const;
     void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed);
-    void					update(const sf::Time& elapsedTime, sf::View& view);
-    sf::CircleShape         getShape();
+    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, sf::Texture>& babyTextures);
+    sf::Sprite              getSelf();
 
 private:
-    float                   PlayerSpeed = 100.f;
+    float                   PlayerSpeed = 200.f;
     sf::Vector2f            mSpeed;
-    sf::CircleShape			mShape;
+    sf::Sprite			    mChar;
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
     bool					mIsMovingRight{ false };
