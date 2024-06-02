@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+	<Monde>
+		<Niveau label="M1_Niveau1">
+			<!-- Crée un élément en position (x,y) de taille (w,h) -->     
+			<Player x="400" y="300" h="106" w="144"/>
+			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
+			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
+			<Wall x="1200" y="600" h="85" w="256" vertical="false"/>
+
+		</Niveau>
+		
+		<Niveau label="M1_Niveau2">
+			<!-- Crée un élément en position (x,y) de taille (w,h) -->
+			<Player x="400" y="300" h="106" w="144"/>
+			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
+			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
+			<Wall x="-100" y="600" h="85" w="256" vertical="false"/>
+		</Niveau>
+	</Monde>
+

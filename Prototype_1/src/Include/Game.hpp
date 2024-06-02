@@ -4,7 +4,9 @@
 #include "SFML/Graphics.hpp"
 #include "RoundTarget.hpp"
 #include "Player.hpp"
-
+#include "Wall.hpp"
+#include "Group.hpp"
+#pragma once
 
 class Game : private sf::NonCopyable
 {
@@ -16,27 +18,27 @@ class Game : private sf::NonCopyable
 		void					processEvents();
 		void					update(sf::Time elapsedTime);
 		void					render();
-		void					initialize(std::vector<RoundTarget> &mTargets);
-
+		void					initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture> &textures);
+		void					initTextures(std::map<std::string, const sf::Texture> &textures);
 		void					updateStatistics(sf::Time elapsedTime);	
 
 		static const sf::Time	TimePerFrame;
 		
 
-		std::map<std::string,sf::Texture> babyTextures;
+		std::map<std::string,const sf::Texture> textures;
 
-		sf::RectangleShape		windowBounds{ sf::Vector2f(1024,768) };
-		sf::RectangleShape		testCloud{ sf::Vector2f(280,70)};
-		int						nbCercles = 10;
-		Player					ludo{ 400,300 };
-		sf::View				altView{sf::Vector2f(512.f,384.f),sf::Vector2f(1024,768)};
-		sf::RenderWindow		mWindow{sf::VideoMode{1024,768}, "SFML Application", sf::Style::Close};
+		int										nbCercles = 10;
+
+		sf::View								altView{sf::Vector2f(512.f,384.f),sf::Vector2f(1024,768)};
+		sf::RenderWindow						mWindow{sf::VideoMode{1024,768}, "SFML Application", sf::Style::Close};
 	
-        std::vector<RoundTarget> mTargets;
-		sf::Font				mFont;
-		sf::Text				mStatisticsText;
-		sf::Time				mStatisticsUpdateTime;
-		std::size_t				mStatisticsNumFrames{0};
+		std::vector<std::unique_ptr<Group>>		levels;
+		int										curLevel = 0;
+        std::vector<RoundTarget>				mTargets;
+		sf::Font								mFont;
+		sf::Text								mStatisticsText;
+		sf::Time								mStatisticsUpdateTime;
+		std::size_t								mStatisticsNumFrames{0};
 };
 
 #endif // BOOK_GAME_HPP

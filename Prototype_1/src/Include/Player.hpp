@@ -1,21 +1,30 @@
 #include "Entity.hpp"
+#include "Wall.hpp"
+#pragma once
 
-
-class Player : Entity {
+class Player : public Entity {
 public:
-    Player(float x, float y);
-    void                    setTexture(const sf::Texture& initTexture);
-    void					drawCurrent(sf::RenderWindow& window) const;
+    explicit Player(float x, float y, int height, int width);
+    explicit Player(const pugi::xml_node& node);
+    void                    setTexture(std::map<std::string, const sf::Texture> &textures) override;
+    void					drawCurrent(sf::RenderWindow& window) const override;
     void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed);
-    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, sf::Texture>& babyTextures);
+    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& babyTextures);
     sf::Sprite              getSelf();
-
+    void                    collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime) ;
+    sf::Vector2f            getPos() override;
+    sf::Vector2f            getSiz() override;
 private:
     float                   PlayerSpeed = 200.f;
-    sf::Vector2f            mSpeed;
+    float                   acceleration = 0.f;
+    float                   maxGravity = 1000.f;
     sf::Sprite			    mChar;
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
     bool					mIsMovingRight{ false };
     bool					mIsMovingLeft{ false };
+    bool                    collideUp{ false };
+    bool                    collideDown{ false };
+    bool                    collideRight{ false };
+    bool                    collideLeft{ false };
 };

@@ -10,7 +10,7 @@ public:
     RoundTarget(float radius, sf::Color color, float x, float y, float xspeed, float yspeed);
     void					drawCurrent(sf::RenderWindow &window) const;
     void					handlePlayerInput(const sf::Keyboard::Key &key, const bool &isPressed);
-    void					update(const sf::Time &elapsedTime, const sf::Vector2u windowSize);
+    void					update(const sf::Time &elapsedTime, const sf::View &view);
     sf::CircleShape         getShape() const;
     bool                    isHitByMouse(const sf::Vector2i &mousePosition) const;
     enum RoundTargetStatus  getStatus() const;

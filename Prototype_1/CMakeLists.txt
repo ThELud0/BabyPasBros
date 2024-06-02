@@ -12,6 +12,16 @@ endif()
 
 set (BUILD_SHARED_LIBS FALSE)
 
+set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # This cmake_policy avoids warning by cmake when we use pugixml
+
+cmake_policy(SET CMP0135 NEW) # This cmake_policy avoids warning by cmake when we fetch contents based on URL
+FetchContent_Declare(
+    pugixml
+    URL https://github.com/zeux/pugixml/releases/download/v1.14/pugixml-1.14.tar.gz
+)
+
+FetchContent_MakeAvailable(pugixml)
+
 if(APPLE)
   find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
   include_directories(${SFML_INCLUDE_DIRS})

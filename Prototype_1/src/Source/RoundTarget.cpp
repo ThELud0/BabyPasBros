@@ -30,13 +30,13 @@ void RoundTarget::setStatus(RoundTargetStatus stat) {
     status = stat;
 }
 
-void RoundTarget::update(const sf::Time &elapsedTime, const sf::Vector2u windowSize) {
+void RoundTarget::update(const sf::Time &elapsedTime, const sf::View &view) {
     
-    if ((mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() <= 0.f) || (mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() >= static_cast<float>(windowSize.x) - 2 * mShape.getRadius())) {
+    if ((mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() * 20 <= view.getCenter().x - view.getSize().x/2) || (mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() * 20 >= view.getCenter().x + view.getSize().x / 2 - 2 * mShape.getRadius())) {
         mSpeed.x = -mSpeed.x;
     }
 
-    if ((mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() <= 0.f) || (mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() >= static_cast<float>(windowSize.y) - 2 * mShape.getRadius())) {
+    if ((mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() * 20 <= view.getCenter().y - view.getSize().y / 2) || (mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() * 20 >= view.getCenter().y + view.getSize().y / 2 - 2 * mShape.getRadius())) {
         mSpeed.y = -mSpeed.y;
     }
     sf::Vector2f movement(mSpeed);
