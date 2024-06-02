@@ -67,7 +67,7 @@ void RoundTarget::update(const sf::Time &elapsedTime, const sf::View &view) {
 
 }
 
-bool RoundTarget::isHitByMouse(const sf::Vector2i &mousePosition) const {
+bool RoundTarget::isHitByMouse(const sf::Vector2f &mousePosition) const {
     sf::Vector2f targetCenter = { mShape.getPosition().x + mShape.getRadius(), mShape.getPosition().y + mShape.getRadius() };
     float distanceClickFromCenter = (targetCenter.x - mousePosition.x)*(targetCenter.x - mousePosition.x) + (targetCenter.y - mousePosition.y)*(targetCenter.y - mousePosition.y);
     return (distanceClickFromCenter <= mShape.getRadius() * mShape.getRadius());

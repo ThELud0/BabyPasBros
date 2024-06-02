@@ -12,7 +12,7 @@ public:
     void					handlePlayerInput(const sf::Keyboard::Key &key, const bool &isPressed);
     void					update(const sf::Time &elapsedTime, const sf::View &view);
     sf::CircleShape         getShape() const;
-    bool                    isHitByMouse(const sf::Vector2i &mousePosition) const;
+    bool                    isHitByMouse(const sf::Vector2f &mousePosition) const;
     enum RoundTargetStatus  getStatus() const;
     void                    setStatus(RoundTargetStatus stat);
     void                    isDying();

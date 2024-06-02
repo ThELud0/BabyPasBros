@@ -101,12 +101,14 @@ void Game::processEvents()
 			case sf::Event::MouseButtonPressed:
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
+					mWindow.setView(altView);
 					for (auto target = mTargets.rbegin(); target != mTargets.rend(); ++target) {
-						if ((target->isHitByMouse(sf::Mouse::getPosition(mWindow)))&&(target->getStatus()==RoundTargetStatus::Alive)) {
+						if ((target->isHitByMouse(mWindow.mapPixelToCoords(sf::Mouse::getPosition(mWindow))))&&(target->getStatus()==RoundTargetStatus::Alive)) {
 							std::next(target).base() -> setStatus(RoundTargetStatus::Dying);
 							break;
 						}
 					}
+					mWindow.setView(mWindow.getDefaultView());
 				}
 				else if (event.mouseButton.button == sf::Mouse::Right) {
 					++curLevel;
@@ -247,13 +249,12 @@ void Game::updateStatistics(sf::Time elapsedTime)
 
 	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
 	{
-
 			mStatisticsText.setString(
 				"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
 				"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us\n" +
 
-				"View pos = " + toString(altView.getCenter().x) + "  " + toString(altView.getCenter().y)
-
+				"View center pos = " + toString(altView.getCenter().x) + "  " + toString(altView.getCenter().y) + "\n" 
+	
 			);
 							 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);
