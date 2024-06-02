@@ -123,7 +123,7 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 
 		///si le joueur fini hors de l'écran par exemple à cause d'un respawn suite au changement de niveau
 		///ou d'un autre bug, la vue se recentre sur le joueur.
-		if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2) || (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - mChar.getTextureRect().getSize().x)) {
+		if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2 + mChar.getTextureRect().getSize().x - 1) || (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - mChar.getTextureRect().getSize().x*2 + 1)) {
 			view.move(mChar.getPosition().x - view.getCenter().x, 0.f);
 		}
 	}
@@ -131,7 +131,7 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 	if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y/2 - mChar.getTextureRect().getSize().y * 2) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y/2 + mChar.getTextureRect().getSize().y)) {
 
 		view.move(0.f, movement.y * elapsedTime.asSeconds());
-		if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - mChar.getTextureRect().getSize().y) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2)) {
+		if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - mChar.getTextureRect().getSize().y * 2 + 1) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + mChar.getTextureRect().getSize().y - 1)) {
 			view.move(0.f, mChar.getPosition().y - view.getCenter().y);
 		}
 	}
