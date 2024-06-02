@@ -171,7 +171,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, 
 		float radius = rando(10, 50);
 		sf::Color couleur = couleurAleatoire();
 		float x = rando(0, mWindow.getSize().x - 2 * radius);
-		float y = rando(mWindow.getSize().y/2, mWindow.getSize().y - 2 * radius);
+		float y = rando(0, mWindow.getSize().y - 2 * radius);
 		float xspeed = invertOrNot(rando(1, 100));
 		float yspeed = invertOrNot(sqrt(100 * 100 - xspeed * xspeed));
 		RoundTarget target{ radius, couleur, x, y, xspeed, yspeed };

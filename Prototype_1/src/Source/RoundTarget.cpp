@@ -32,12 +32,24 @@ void RoundTarget::setStatus(RoundTargetStatus stat) {
 
 void RoundTarget::update(const sf::Time &elapsedTime, const sf::View &view) {
     
-    if ((mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() * 20 <= view.getCenter().x - view.getSize().x/2) || (mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() * 20 >= view.getCenter().x + view.getSize().x / 2 - 2 * mShape.getRadius())) {
+    if ((mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() <= view.getCenter().x - view.getSize().x/2) || (mShape.getPosition().x + mSpeed.x * elapsedTime.asSeconds() >= view.getCenter().x + view.getSize().x / 2 - 2 * mShape.getRadius())) {
         mSpeed.x = -mSpeed.x;
+        if (mShape.getPosition().x - view.getCenter().x > 0) {
+            mShape.setPosition(view.getCenter().x + view.getSize().x / 2 - 2 * mShape.getRadius(), mShape.getPosition().y);
+        }
+        else if (mShape.getPosition().x - view.getCenter().x < 0) {
+            mShape.setPosition(view.getCenter().x - view.getSize().x / 2, mShape.getPosition().y);
+        }
     }
 
-    if ((mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() * 20 <= view.getCenter().y - view.getSize().y / 2) || (mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() * 20 >= view.getCenter().y + view.getSize().y / 2 - 2 * mShape.getRadius())) {
+    if ((mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() <= view.getCenter().y - view.getSize().y / 2) || (mShape.getPosition().y + mSpeed.y * elapsedTime.asSeconds() >= view.getCenter().y + view.getSize().y / 2 - 2 * mShape.getRadius())) {
         mSpeed.y = -mSpeed.y;
+        if (mShape.getPosition().y - view.getCenter().y > 0) {
+            mShape.setPosition(mShape.getPosition().x, view.getCenter().y + view.getSize().y / 2 - 2 * mShape.getRadius());
+        }
+        else if (mShape.getPosition().y - view.getCenter().y < 0) {
+            mShape.setPosition(mShape.getPosition().x, view.getCenter().y - view.getSize().y / 2);
+        }
     }
     sf::Vector2f movement(mSpeed);
     mShape.move(movement * elapsedTime.asSeconds());
