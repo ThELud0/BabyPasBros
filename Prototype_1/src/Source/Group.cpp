@@ -1,6 +1,14 @@
 #include "Group.hpp"
 using namespace std::literals;
 
+
+/// <summary>
+/// lecture d'un node xml représentant un niveau dont le nom est donné dans un label, qui sera utilisé pour nommer la fenêtre 
+/// de jeu du-dit niveau
+/// les éléments du niveau sont initialisés dans un groupe constitué d'un joueur MainCharacter
+/// et (pour l'instant) d'une liste de murs Wall.
+/// </summary>
+/// <param name="node"> le node contenant les informations du niveau à stocker dans le groupe</param>
 Group::Group(const pugi::xml_node& node) : windowName(node.attribute("label").as_string()){
 	for (auto const& child : node.children()) {
 		if (child.name() == "Player"sv) {
@@ -15,6 +23,13 @@ Group::Group(const pugi::xml_node& node) : windowName(node.attribute("label").as
 	}
 }
 
+
+/// <summary>
+/// Les objets du groupe prennent chacun leur texture parmi celles disponibles, 
+/// qui sont initialisées et stockées dans une map nommée textures.
+/// La texture choisie pour chaque objet est définie selon une règle dans la fonction setTexture de leur classe.
+/// </summary>
+/// <param name="textures"></param>
 void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
 	mainCharacter->setTexture(textures);
 	for (auto& entity : children) {
@@ -22,14 +37,22 @@ void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
 	}
 }
 
+/// <summary>
+/// Appelle la fonction update du mainCharacter et des éléments du groupe.
+/// </summary>
+/// <param name="elapsedTime"></param>
+/// <param name="view"></param>
+/// <param name="textures"></param>
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
-
 	for (auto& entity : children) {
 		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime);
 	}
 }
-
+/// <summary>
+/// Dessine tous les éléments du groupe.
+/// </summary>
+/// <param name="window"></param>
 void Group::drawCurrent(sf::RenderWindow& window) const {
 	mainCharacter->drawCurrent(window);
 	for (auto const& entity : children) {
@@ -37,10 +60,19 @@ void Group::drawCurrent(sf::RenderWindow& window) const {
 	}
 }
 
+/// <summary>
+/// Retourne le nom du niveau que les éléments du groupe constituent.
+/// </summary>
+/// <returns></returns>
 std::string Group::returnName() const {
 	return windowName;
 }
 
+/// <summary>
+/// Transmet les événement aux éléments individuels du groupe pour traitement.
+/// </summary>
+/// <param name="key"></param>
+/// <param name="isPressed"></param>
 void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
 	mainCharacter->handlePlayerInput(key, isPressed);
 }
