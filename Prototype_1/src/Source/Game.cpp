@@ -52,7 +52,6 @@ float invertOrNot(float x) {
 
 
 
-
 Game::Game()
 {
 	mFont.loadFromFile("media/Sansation.ttf");
@@ -67,9 +66,21 @@ void Game::run()
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	mWindow.setVerticalSyncEnabled(true);
 	
-	initTextures(textures);
 
+	sf::Texture levelStart;
+	if (!levelStart.loadFromFile("media/sleeping_baby_art.jpg")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+	levelStartScreen.setTexture(&levelStart);
+	levelStartScreen.setSize(sf::Vector2f(5269.f, 4176.f));
+	levelStartScreen.setPosition(-2400.f,-800.f);
+
+	initTextures(textures);
 	initialize(mTargets, textures);
+
+
+
 
 	while (mWindow.isOpen())
 	{
@@ -111,6 +122,7 @@ void Game::processEvents()
 					mWindow.setView(mWindow.getDefaultView());
 				}
 				else if (event.mouseButton.button == sf::Mouse::Right) {
+					
 					++curLevel;
 					levels[curLevel]->setTexture(textures);
 					levels[curLevel]->drawCurrent(mWindow);
@@ -193,19 +205,36 @@ void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, 
 	{
 		std::cout << child.name() << "\n";
 		auto grp = std::make_unique<Group>(child);
-
+		grp->setTexture(textures);
 		levels.push_back(std::move(grp));
 	}
 	
 	mWindow.setTitle(levels[0] -> returnName());
 	
 	levels[0]->setTexture(textures);
-	levels[0]->drawCurrent(mWindow);
 	
 }
 
 void Game::update(sf::Time elapsedTime)
 {
+
+	if (altView.getSize().x > 1024) {
+		altView.setSize(altView.getSize().x - (4246.f/startingAnimationTime), altView.getSize().y);
+		altView.setCenter(altView.getCenter().x + (levels[curLevel]->getMCPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
+			altView.getCenter().y);
+	}
+	if (altView.getSize().y > 768) {
+		altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f/ startingAnimationTime));
+		altView.setCenter(altView.getCenter().x,
+			(levels[curLevel]->getMCPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
+	}
+
+	if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
+		altView.setSize(sf::Vector2f(1024, 768));
+		canStart = true;
+	}
+
+
 	if (mTargets.empty()) {
 		mWindow.close();
 	}
@@ -219,17 +248,18 @@ void Game::update(sf::Time elapsedTime)
 		}
 		target -> update(elapsedTime, altView);
 	}
-
-	levels[curLevel]->update(elapsedTime, altView, textures);
+	if (canStart)
+		levels[curLevel]->update(elapsedTime, altView, textures);
 
 }
 
 void Game::render()
 {
 
-	mWindow.clear();
+	mWindow.clear(sf::Color(248,250,245));
 	mWindow.setView(altView);
-
+	if (!canStart)
+		mWindow.draw(levelStartScreen);
 
 	for (auto const &target : mTargets) {
 		target.drawCurrent(mWindow);
@@ -253,7 +283,8 @@ void Game::updateStatistics(sf::Time elapsedTime)
 				"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
 				"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us\n" +
 
-				"View center pos = " + toString(altView.getCenter().x) + "  " + toString(altView.getCenter().y) + "\n" 
+				"View center pos = " + toString(altView.getCenter().x) + "  " + toString(altView.getCenter().y) + "\n" +
+				"View size = " + toString(altView.getSize().x) + "  " + toString(altView.getSize().y)
 	
 			);
 							 

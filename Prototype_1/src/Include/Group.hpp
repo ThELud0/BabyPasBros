@@ -12,6 +12,7 @@ public:
 	void update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures);
 	std::string	returnName() const;
 	void handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed);
+	sf::Vector2f getMCPos();
 
 private:
 	std::string const windowName;

@@ -68,6 +68,10 @@ std::string Group::returnName() const {
 	return windowName;
 }
 
+sf::Vector2f Group::getMCPos() {
+	return mainCharacter -> getPos();
+}
+
 /// <summary>
 /// Transmet les événement aux éléments individuels du groupe pour traitement.
 /// </summary>
