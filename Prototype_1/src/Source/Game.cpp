@@ -66,18 +66,20 @@ void Game::run()
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	mWindow.setVerticalSyncEnabled(true);
 	
-
+	//Initialise le fond d'écran de début de jeu
 	sf::Texture levelStart;
 	if (!levelStart.loadFromFile("media/sleeping_baby_art.jpg")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
 	levelStartScreen.setTexture(&levelStart);
+	//attention, modifier les valeurs ci-dessous peut casser l'animation de départ... code à améliorer si temps libre
 	levelStartScreen.setSize(sf::Vector2f(5269.f, 4176.f));
 	levelStartScreen.setPosition(-2400.f,-800.f);
 
+	//Initialise les autres éléments du jeu (textures, joueur, murs...)
 	initTextures(textures);
-	initialize(mTargets, textures);
+	initialize(mTargets, textures,levels);
 
 
 
@@ -179,7 +181,7 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 
 }
 
-void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture> &textures) {
+void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture> &textures, std::vector<std::unique_ptr<Group>> &levels) {
 	
 	for (int i = 0;i < nbCercles;++i) {
 		float radius = rando(10, 50);
@@ -217,7 +219,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, 
 
 void Game::update(sf::Time elapsedTime)
 {
-
+	///animation de départ qui zoom vers la "vraie fenêtre" de jeu
 	if (altView.getSize().x > 1024) {
 		altView.setSize(altView.getSize().x - (4246.f/startingAnimationTime), altView.getSize().y);
 		altView.setCenter(altView.getCenter().x + (levels[curLevel]->getMCPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
@@ -256,7 +258,7 @@ void Game::update(sf::Time elapsedTime)
 void Game::render()
 {
 
-	mWindow.clear(sf::Color(248,250,245));
+	mWindow.clear(sf::Color(248,250,245));//c'est la couleur de la bulle de rêve de l'image au début du jeu!
 	mWindow.setView(altView);
 	if (!canStart)
 		mWindow.draw(levelStartScreen);
