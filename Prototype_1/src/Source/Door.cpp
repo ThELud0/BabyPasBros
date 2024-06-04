@@ -114,7 +114,10 @@ void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::str
 		}
 		else if (!physical) {
 			if ((pair.first == "openedDoor") && (vertical)) {
-				wShape.setTexture(&pair.second);
+				wShape.setTexture(&pair.second,true);
+				wShape.setSize(sf::Vector2f(width * 1.5, height));
+
+				
 			}
 			else if ((pair.first == "flippedOpenedDoor") && (!vertical)) {
 				wShape.setTexture(&pair.second);

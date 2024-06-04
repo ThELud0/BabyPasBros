@@ -54,8 +54,8 @@ Game::Game()
 {
 	mFont.loadFromFile("media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
-	mStatisticsText.setPosition(5.f, 5.f);
-	mStatisticsText.setCharacterSize(10);
+	mStatisticsText.setColor(sf::Color::Black);
+	
 }
 
 void Game::run()
@@ -112,7 +112,6 @@ void Game::processEvents()
 			case sf::Event::MouseButtonPressed:
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					altView.zoom(2.f);
 					mWindow.setView(altView);
 					for (auto target = mTargets.rbegin(); target != mTargets.rend(); ++target) {
 						if ((target->isHitByMouse(mWindow.mapPixelToCoords(sf::Mouse::getPosition(mWindow))))&&(target->getStatus()==RoundTargetStatus::Alive)) {
@@ -239,21 +238,27 @@ void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, 
 
 void Game::update(sf::Time elapsedTime)
 {
-	///animation de départ qui zoom vers la "vraie fenêtre" de jeu
-	if (altView.getSize().x > 1024) {
-		altView.setSize(altView.getSize().x - (4246.f/startingAnimationTime), altView.getSize().y);
-		altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
-			altView.getCenter().y);
-	}
-	if (altView.getSize().y > 768) {
-		altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f/ startingAnimationTime));
-		altView.setCenter(altView.getCenter().x,
-			(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
-	}
+	//laisser un temps pour charger les images au début
+	if (loadingTime > 0)
+		--loadingTime;
 
-	if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
-		altView.setSize(sf::Vector2f(1024, 768));
-		canStart = true;
+	///animation de départ qui zoom vers la "vraie fenêtre" de jeu
+	if (loadingTime <= 0) {
+		if (altView.getSize().x > 1024) {
+			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);
+			altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
+				altView.getCenter().y);
+		}
+		if (altView.getSize().y > 768) {
+			altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f / startingAnimationTime));
+			altView.setCenter(altView.getCenter().x,
+				(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
+		}
+
+		if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
+			altView.setSize(sf::Vector2f(1024, 768));
+			canStart = true;
+		}
 	}
 
 
@@ -301,9 +306,20 @@ void Game::updateStatistics(sf::Time elapsedTime)
 	mStatisticsUpdateTime += elapsedTime;
 	mStatisticsNumFrames += 1;
 
-	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
+	if (loadingTime > 0) {
+		//center text
+		mStatisticsText.setCharacterSize(60);
+		sf::FloatRect textRect = mStatisticsText.getLocalBounds();
+		mStatisticsText.setOrigin(textRect.left + textRect.width / 2.0f,textRect.top + textRect.height / 2.0f);
+		mStatisticsText.setPosition(sf::Vector2f(mWindow.getSize().x / 2.0f, mWindow.getSize().y / 2.0f));
+		mStatisticsText.setString("Loading...");
+	}
+
+	if ((mStatisticsUpdateTime >= sf::seconds(1.0f))&&(loadingTime<=0))
 	{
-			mStatisticsText.setString(
+		mStatisticsText.setPosition(5.f, 5.f);
+		mStatisticsText.setCharacterSize(10);
+		mStatisticsText.setString(
 				"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
 				"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us\n" +
 
