@@ -40,6 +40,7 @@ void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
 	for (auto& entity : children) {
 		entity->setTexture(textures);
 	}
+	
 }
 
 /// <summary>
@@ -68,10 +69,11 @@ void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& ela
 /// </summary>
 /// <param name="window"></param>
 void Group::drawCurrent(sf::RenderWindow& window) const {
-	mainCharacter->drawCurrent(window);
+	
 	for (auto const& entity : children) {
 		entity->drawCurrent(window);
 	}
+	mainCharacter->drawCurrent(window);
 }
 
 /// <summary>

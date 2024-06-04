@@ -4,22 +4,24 @@ using namespace std::literals;
 
 Door::Door(float x, float y, int height, int width, const bool& vertical) : Entity{ x, y, height, width }, vertical(vertical) {
 	wShape.setPosition(x, y);
-	wShape.setSize(sf::Vector2f(width, height));
-
+	wShape.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(height)));
+	doorText.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(width) * 751.f / 81.f));
+	doorText.setPosition(x, y + static_cast<float>(height) + static_cast<float>(width) * 751.f / 81.f / 2);
+	
 }
 
 Door::Door(const pugi::xml_node& node) : Entity{ node },
 vertical(node.attribute("vertical").as_bool()) {
 	wShape.setPosition(x, y);
 	wShape.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(height)));
+	doorText.setSize(sf::Vector2f(static_cast<float>(width*1.25), static_cast<float>(width*1.25) * 81.f / 751.f));
+	doorText.setPosition(x + (static_cast<float>(width) - static_cast<float>(width * 1.25))/2, y + static_cast<float>(height)/ 2.f - static_cast<float>(width) * 81.f / 751.f );
 }
 
 void Door::drawCurrent(sf::RenderWindow& window) const {
 	window.draw(wShape);
-
 	if ((isNear) && (physical)) {
-		std::cout << "writing\n"; 
-		window.draw(dText);
+		window.draw(doorText);
 	}
 
 }
@@ -32,12 +34,12 @@ void Door::setTexture(std::map<std::string, const sf::Texture>& textures) {
 		else if ((pair.first == "flippedClosedDoor") && (!vertical)) {
 			wShape.setTexture(&pair.second);
 		}
+		else if (pair.first == "openDoorText") {
+			doorText.setTexture(&pair.second);
+		}
 	}
-	dText.setCharacterSize(60);
-	dText.setString("Click \"E\"\n to open\n");
-	dText.setOrigin(dText.getGlobalBounds().getSize().x / 2, dText.getGlobalBounds().getSize().y / 2);
-	dText.setPosition(x + width / 2, y + height / 2);
 
+	
 }
 
 sf::Vector2f Door::getPos() {
@@ -75,24 +77,24 @@ void Door::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elap
 
 	//joueur au dessus de la porte
 	if ((yPlayer < yWall) && (xPlayer + widPlayer > xWall) && (xPlayer < xWall + widWall)
-		&&(yPlayer + static_cast<float>(heiPlayer)  >= yWall)) {
+		&&(yPlayer + static_cast<float>(heiPlayer)*1.5  >= yWall)) {
 		isNear = true;
 	}
 
 	//joueur en dessous de la porte
 	if ((yPlayer + static_cast<float>(heiPlayer) > yWall + heiWall) && (xPlayer + widPlayer > xWall) 
-		&& (xPlayer < xWall + widWall)&& (yPlayer <= yWall + heiWall)) {
+		&& (xPlayer < xWall + widWall)&& (yPlayer - static_cast<float>(heiPlayer) * 0.25 <= yWall + heiWall)) {
 		isNear = true;
 	}
 
 	//joueur à gauche de la porte
-	if ((xPlayer < xWall) && (yPlayer < yWall + heiWall) 
-		&& (yPlayer + height > yWall) && (xPlayer + width >= xWall)) {
+	if ((xPlayer < xWall) && (yPlayer <= yWall + heiWall) 
+		&& (yPlayer + heiPlayer >= yWall) && (xPlayer + widPlayer*1.5 >= xWall)) {
 		isNear = true;
 	}
 	//joueur à droite du mur
-	if ((xPlayer + width > xWall + widWall) && (yPlayer < yWall + heiWall) 
-		&& (yPlayer + height > yWall) && (xPlayer <= xWall + widWall)) {
+	if ((xPlayer + widPlayer > xWall + widWall) && (yPlayer <= yWall + heiWall) 
+		&& (yPlayer + heiPlayer >= yWall) && (xPlayer - widPlayer*0.5 <= xWall + widWall)) {
 		isNear = true;
 	}
 	

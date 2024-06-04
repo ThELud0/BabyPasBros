@@ -112,6 +112,7 @@ void Game::processEvents()
 			case sf::Event::MouseButtonPressed:
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
+					altView.zoom(2.f);
 					mWindow.setView(altView);
 					for (auto target = mTargets.rbegin(); target != mTargets.rend(); ++target) {
 						if ((target->isHitByMouse(mWindow.mapPixelToCoords(sf::Mouse::getPosition(mWindow))))&&(target->getStatus()==RoundTargetStatus::Alive)) {
@@ -152,6 +153,7 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 	sf::Texture flippedCloud;
 	sf::Texture closedDoor;
 	sf::Texture openedDoor;
+	sf::Texture openDoorText;
 
 	if (!babyLeft.loadFromFile("media/babygoleft.png")) {
 		std::cout << "texture load failed\n";
@@ -184,12 +186,18 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 		exit(1);
 	}
 
+	if (!openDoorText.loadFromFile("media/open_door_text.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
 	textures.insert(std::make_pair("babyleft", babyLeft));
 	textures.insert(std::make_pair("babyright", babyRight));
 	textures.insert(std::make_pair("groundCloud", groundCloud));
 	textures.insert(std::make_pair("flippedCloud", flippedCloud));
 	textures.insert(std::make_pair("closedDoor", closedDoor));
 	textures.insert(std::make_pair("openedDoor", openedDoor));
+	textures.insert(std::make_pair("openDoorText", openDoorText));
 
 }
 

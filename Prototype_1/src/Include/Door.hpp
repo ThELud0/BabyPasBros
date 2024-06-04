@@ -20,6 +20,6 @@ private:
 	sf::RectangleShape	wShape;
 	const bool			vertical;
 	bool				isNear{ false };
-	sf::Text			dText;
+	sf::RectangleShape	doorText;
 
 };
