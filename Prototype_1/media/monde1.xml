@@ -5,6 +5,7 @@
 			<Player x="400" y="300" h="106" w="144"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
 			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
+			<Door x="100" y="400" h="332" w="152" vertical="true"/>
 			<Wall x="1200" y="600" h="85" w="256" vertical="false"/>
 
 		</Niveau>
@@ -14,6 +15,7 @@
 			<Player x="400" y="300" h="106" w="144"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
 			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
+			<Door x="600" y="400" h="332" w="152" vertical="true"/>
 			<Wall x="-100" y="600" h="85" w="256" vertical="false"/>
 		</Niveau>
 	</Monde>

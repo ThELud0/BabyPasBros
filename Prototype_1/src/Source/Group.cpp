@@ -9,7 +9,7 @@ using namespace std::literals;
 /// et (pour l'instant) d'une liste de murs Wall.
 /// </summary>
 /// <param name="node"> le node contenant les informations du niveau à stocker dans le groupe</param>
-Group::Group(const pugi::xml_node& node) : windowName(node.attribute("label").as_string()){
+Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.attribute("label").as_string()) {
 	for (auto const& child : node.children()) {
 		if (child.name() == "Player"sv) {
 			mainCharacter = std::make_unique<Player>(child);
@@ -17,6 +17,11 @@ Group::Group(const pugi::xml_node& node) : windowName(node.attribute("label").as
 		
 		else if (child.name() == "Wall"sv) {
 			auto s = std::make_unique<Wall>(child);
+			children.push_back(std::move(s));
+		}
+
+		else if (child.name() == "Door"sv) {
+			auto s = std::make_unique<Door>(child);
 			children.push_back(std::move(s));
 		}
 		
@@ -46,9 +51,18 @@ void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
 	for (auto& entity : children) {
-		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime);
+		entity->update(elapsedTime, view, textures);
+	}
+	
+}
+
+void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) {
+	for (auto& entity : children) {
+		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime, entity->getPhysicalState());
+		entity->collide(mcPos, mcSize, elapsedTime, physical);
 	}
 }
+
 /// <summary>
 /// Dessine tous les éléments du groupe.
 /// </summary>
@@ -68,8 +82,12 @@ std::string Group::returnName() const {
 	return windowName;
 }
 
-sf::Vector2f Group::getMCPos() {
+sf::Vector2f Group::getPos() {
 	return mainCharacter -> getPos();
+}
+
+sf::Vector2f Group::getSiz() {
+	return mainCharacter->getSiz();
 }
 
 /// <summary>
@@ -79,4 +97,7 @@ sf::Vector2f Group::getMCPos() {
 /// <param name="isPressed"></param>
 void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
 	mainCharacter->handlePlayerInput(key, isPressed);
+	for (auto const& entity : children) {
+		entity->handlePlayerInput(key,isPressed);
+	}
 }

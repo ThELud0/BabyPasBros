@@ -8,12 +8,13 @@ public:
     explicit Player(const pugi::xml_node& node);
     void                    setTexture(std::map<std::string, const sf::Texture> &textures) override;
     void					drawCurrent(sf::RenderWindow& window) const override;
-    void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed);
-    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& babyTextures);
+    void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override;
+    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& babyTextures) override;
     sf::Sprite              getSelf();
-    void                    collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime) ;
+    void                    collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) override;
     sf::Vector2f            getPos() override;
     sf::Vector2f            getSiz() override;
+
 private:
     float                   PlayerSpeed = 200.f;
     float                   acceleration = 0.f;

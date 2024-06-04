@@ -20,10 +20,10 @@ int rando(int const nbMin, int const nbMax)
 
 
 sf::Color couleurAleatoire() {
-	int choix = rando(0,5);
+	int choix = rando(0,4);
 	switch (choix) {
 	case 0:
-		return sf::Color::White;
+		return sf::Color::Cyan;
 	case 1:
 		return sf::Color::Yellow;
 	case 2:
@@ -32,8 +32,6 @@ sf::Color couleurAleatoire() {
 		return sf::Color::Blue;
 	case 4:
 		return sf::Color::Magenta;
-	case 5:
-		return sf::Color::Cyan;
 	default :
 		//returns Orange color but technically this should never happen
 		return sf::Color(255, 165, 0);
@@ -152,6 +150,8 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 	sf::Texture	babyRight;
 	sf::Texture groundCloud;
 	sf::Texture flippedCloud;
+	sf::Texture closedDoor;
+	sf::Texture openedDoor;
 
 	if (!babyLeft.loadFromFile("media/babygoleft.png")) {
 		std::cout << "texture load failed\n";
@@ -174,10 +174,22 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 		exit(1);
 	}
 
+	if (!closedDoor.loadFromFile("media/closed_door.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
+	if (!openedDoor.loadFromFile("media/opened_door.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
 	textures.insert(std::make_pair("babyleft", babyLeft));
 	textures.insert(std::make_pair("babyright", babyRight));
 	textures.insert(std::make_pair("groundCloud", groundCloud));
 	textures.insert(std::make_pair("flippedCloud", flippedCloud));
+	textures.insert(std::make_pair("closedDoor", closedDoor));
+	textures.insert(std::make_pair("openedDoor", openedDoor));
 
 }
 
@@ -222,13 +234,13 @@ void Game::update(sf::Time elapsedTime)
 	///animation de départ qui zoom vers la "vraie fenêtre" de jeu
 	if (altView.getSize().x > 1024) {
 		altView.setSize(altView.getSize().x - (4246.f/startingAnimationTime), altView.getSize().y);
-		altView.setCenter(altView.getCenter().x + (levels[curLevel]->getMCPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
+		altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
 			altView.getCenter().y);
 	}
 	if (altView.getSize().y > 768) {
 		altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f/ startingAnimationTime));
 		altView.setCenter(altView.getCenter().x,
-			(levels[curLevel]->getMCPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
+			(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
 	}
 
 	if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
@@ -250,8 +262,10 @@ void Game::update(sf::Time elapsedTime)
 		}
 		target -> update(elapsedTime, altView);
 	}
-	if (canStart)
+	if (canStart) {
 		levels[curLevel]->update(elapsedTime, altView, textures);
+		levels[curLevel]->collide(levels[curLevel]->getPos(), levels[curLevel]->getSiz(), elapsedTime, true);
+	}
 
 }
 

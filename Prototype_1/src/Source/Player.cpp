@@ -172,7 +172,7 @@ sf::Vector2f Player::getSiz() {
 /// <param name="wallPos"></param>
 /// <param name="wallSize"></param>
 /// <param name="elapsedTime"></param>
-void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime) {
+void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) {
 	///on récupère la position actuelle du joueur et les informations pertinentes au mur traité
 	float xPlayer = mChar.getPosition().x;
 	float yPlayer = mChar.getPosition().y;
@@ -181,39 +181,43 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 	int widWall = wallSize.x;
 	int heiWall = wallSize.y;
 
-	//joueur au dessus du mur
-	if ((yPlayer < yWall) && (xPlayer + width > xWall) && (xPlayer < xWall + widWall) ) {
-		/// on laisse le joueur s'enfoncer légèrement dans le mur (à un quart de sa taille) purement pour l'aspect esthetique.
-		/// on regarde si le prochain mouvement vers le bas du joueur rentre en collision avec le mur. 
-		/// le mouvement le plus rapide dont le joueur est capable vers le bas est à la vitesse maxGravity, atténuée par sa vitesse de saut
-		if (yPlayer + static_cast<float>(height) + (maxGravity) * elapsedTime.asSeconds() >= yWall + static_cast<float>(height) / 4) {
-			collideDown = true;
-			///si le joueur touche le sol, son acceleration due à la gravité retourne à zéro 
-			///de plus il arrête son mouvement de saut vers le haut jusqu'à nouvel ordre.
-			acceleration = 0;
-			mIsMovingUp = false;
+	//si l'obstacle est un obstacle physique
+	if (physical) {
+
+		//joueur au dessus du mur
+		if ((yPlayer < yWall) && (xPlayer + width > xWall) && (xPlayer < xWall + widWall)) {
+			/// on laisse le joueur s'enfoncer légèrement dans le mur (à un quart de sa taille) purement pour l'aspect esthetique.
+			/// on regarde si le prochain mouvement vers le bas du joueur rentre en collision avec le mur. 
+			/// le mouvement le plus rapide dont le joueur est capable vers le bas est à la vitesse maxGravity, atténuée par sa vitesse de saut
+			if (yPlayer + static_cast<float>(height) + (maxGravity)*elapsedTime.asSeconds() >= yWall + static_cast<float>(height) / 4) {
+				collideDown = true;
+				///si le joueur touche le sol, son acceleration due à la gravité retourne à zéro 
+				///de plus il arrête son mouvement de saut vers le haut jusqu'à nouvel ordre.
+				acceleration = 0;
+				mIsMovingUp = false;
+			}
 		}
-	}
-	//joueur en dessous du mur
-	if ((yPlayer + static_cast<float>(height) > yWall + heiWall) && (xPlayer + width > xWall) && (xPlayer < xWall + widWall)) {
-		///au plus vite, un joueur se déplace vers le haut à la vitesse de son saut.
-		if (yPlayer - 3*PlayerSpeed * elapsedTime.asSeconds() <= yWall + heiWall - static_cast<float>(height) / 6) {
-			collideUp = true;
+		//joueur en dessous du mur
+		if ((yPlayer + static_cast<float>(height) > yWall + heiWall) && (xPlayer + width > xWall) && (xPlayer < xWall + widWall)) {
+			///au plus vite, un joueur se déplace vers le haut à la vitesse de son saut.
+			if (yPlayer - 3 * PlayerSpeed * elapsedTime.asSeconds() <= yWall + heiWall - static_cast<float>(height) / 6) {
+				collideUp = true;
+			}
 		}
-	}
-	//joueur à gauche du mur
-	if ((xPlayer < xWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + height > yWall + static_cast<float>(height) / 4)) {
-		///idem que pour le haut et bas, sauf qu'on ne laisse pas le joueur s'enfoncer dans les cotés verticaux d'un mur.
-		///si son prochain mouvement le fait rentrer dans le mur, on l'interdit.
-		if (xPlayer + width + PlayerSpeed * elapsedTime.asSeconds() >= xWall) {
-			collideRight = true;
+		//joueur à gauche du mur
+		if ((xPlayer < xWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + height > yWall + static_cast<float>(height) / 4)) {
+			///idem que pour le haut et bas, sauf qu'on ne laisse pas le joueur s'enfoncer dans les cotés verticaux d'un mur.
+			///si son prochain mouvement le fait rentrer dans le mur, on l'interdit.
+			if (xPlayer + width + PlayerSpeed * elapsedTime.asSeconds() >= xWall) {
+				collideRight = true;
+			}
 		}
-	}
-	//joueur à droite du mur
-	if ((xPlayer + width > xWall + widWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + height > yWall + static_cast<float>(height) / 4)) {
-		///même raisonnement que pour la collision précédente.
-		if (xPlayer - PlayerSpeed * elapsedTime.asSeconds() <= xWall + widWall) {
-			collideLeft = true;
+		//joueur à droite du mur
+		if ((xPlayer + width > xWall + widWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + height > yWall + static_cast<float>(height) / 4)) {
+			///même raisonnement que pour la collision précédente.
+			if (xPlayer - PlayerSpeed * elapsedTime.asSeconds() <= xWall + widWall) {
+				collideLeft = true;
+			}
 		}
 	}
 

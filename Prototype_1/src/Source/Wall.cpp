@@ -1,11 +1,10 @@
 #include "Wall.hpp"
 using namespace std::literals;
 
-Wall::Wall(float x, float y, int height, int width, const sf::Texture& initTexture, const bool &vertical) : Entity{ x, y, height, width }, vertical(vertical) {
+Wall::Wall(float x, float y, int height, int width, const bool &vertical) : Entity{ x, y, height, width }, vertical(vertical) {
 	wShape.setPosition(x, y);
 	wShape.setSize(sf::Vector2f(width, height));
-	//wShape.setTexture(&initTexture);
-	//wShape.setOutlineThickness(2);
+
 }
 
 Wall::Wall(const pugi::xml_node& node) : Entity{ node },
@@ -38,6 +37,16 @@ sf::Vector2f Wall::getSiz() {
 	return wShape.getSize();
 }
 
-bool Wall::isVertical() {
+bool Wall::isVertical() const{
 	return vertical;
+}
+
+
+void Wall::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) {//No interactions
+}
+
+void Wall::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {//No interactions
+}
+
+void Wall::handlePlayerInput(const sf::Keyboard::Key & key, const bool& isPressed) {//No interactions 
 }

@@ -2,7 +2,7 @@ add_library(lib_simpleGame
   Source/Game.cpp
   Source/RoundTarget.cpp
   Source/RoundTarget.cpp
- "Source/Player.cpp" "Source/Wall.cpp" "Source/Entity.cpp" "Source/Group.cpp")
+ "Source/Player.cpp" "Source/Wall.cpp" "Source/Entity.cpp" "Source/Group.cpp" "Source/Door.cpp")
 
 target_include_directories(lib_simpleGame
  PRIVATE
@@ -13,7 +13,7 @@ target_link_libraries(lib_simpleGame PUBLIC pugixml sfml-graphics)
 
 add_executable(simpleGame
   Source/Main.cpp
- "Source/Player.cpp" "Source/Wall.cpp" "Source/Entity.cpp" "Source/Group.cpp")
+ "Source/Player.cpp" "Source/Wall.cpp" "Source/Entity.cpp" "Source/Group.cpp" "Source/Door.cpp")
 
 target_include_directories(simpleGame
  PRIVATE
