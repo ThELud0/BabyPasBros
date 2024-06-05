@@ -103,3 +103,7 @@ void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPresse
 		entity->handlePlayerInput(key,isPressed);
 	}
 }
+
+void Group::dragTowards(sf::Vector2f targetPos) {
+	mainCharacter->dragTowards(targetPos);
+}

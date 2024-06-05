@@ -99,18 +99,26 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 
 	if ((mIsMovingLeft) && (!collideLeft)) {
 		movement.x -= PlayerSpeed;
-		key = "babyleft";
 	}
 	if ((mIsMovingRight) && (!collideRight)) {
 		movement.x += PlayerSpeed;
-		key = "babyright";
 	}
+
+	if (movement.x > 0)
+		key = "babyright";
+	else if (movement.x < 0)
+		key = "babyleft";
 
 	///on change l'apparence du joueur en fonction de son mouvement
 	for (auto& pair : babyTextures) {
 		if (pair.first == key) {
 			mChar.setTexture(pair.second);
 		}
+	}
+
+
+	if (dragging) {
+		movement = dragMovement;
 	}
 
 	mChar.move(movement * elapsedTime.asSeconds());
@@ -136,12 +144,13 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		}
 	}
 
-	///on remet les informations de collision à false, la fonction collide les remettra à
+	///on remet les informations de collision et drag à false, les autres fonctions les remettront à
 	///true si nécéssaire pour le traitement du prochain update.
 	collideUp = false;
 	collideDown = false;
 	collideLeft = false;
 	collideRight = false;
+	dragging = false;
 }
 
 /// <summary>
@@ -221,4 +230,23 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 		}
 	}
 
+}
+
+void Player::dragTowards(sf::Vector2f targetPos) {
+	dragging = true;
+	sf::Vector2f movement(0.f, 0.f);
+	float currentXPos = mChar.getPosition().x;
+	float currentYPos = mChar.getPosition().y;
+
+	if ((targetPos.y < currentYPos ) && (!collideUp))
+		movement.y -= PlayerSpeed * 2;
+
+	if ((targetPos.x < currentXPos + width/3.f ) && (!collideLeft)) {
+		movement.x -= PlayerSpeed;
+	}
+	if ((targetPos.x > currentXPos + width*2.f/3.f ) && (!collideRight)) {
+		movement.x += PlayerSpeed;
+	}
+
+	dragMovement = movement;
 }

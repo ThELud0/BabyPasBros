@@ -272,6 +272,7 @@ void Game::update(sf::Time elapsedTime)
 		}
 		else if (target -> getStatus() == RoundTargetStatus::Dying) {
 			target -> isDying();
+			levels[curLevel]->dragTowards(target->getShape().getPosition());
 		}
 		target -> update(elapsedTime, altView);
 	}

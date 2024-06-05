@@ -14,12 +14,14 @@ public:
     void                    collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) override;
     sf::Vector2f            getPos() override;
     sf::Vector2f            getSiz() override;
+    void                    dragTowards(sf::Vector2f targetPos);
 
 private:
     float                   PlayerSpeed = 200.f;
     float                   acceleration = 0.f;
     float                   maxGravity = 1000.f;
     sf::Sprite			    mChar;
+    sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
     bool					mIsMovingRight{ false };
@@ -28,4 +30,5 @@ private:
     bool                    collideDown{ false };
     bool                    collideRight{ false };
     bool                    collideLeft{ false };
+    bool                    dragging{ false };
 };

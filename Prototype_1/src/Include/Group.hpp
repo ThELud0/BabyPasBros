@@ -13,6 +13,7 @@ public:
 	void			update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) override;
 	void			handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override ;
 	void			collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) override;
+	void			dragTowards(sf::Vector2f targetPos);
 	sf::Vector2f	getPos() override;
 	sf::Vector2f	getSiz() override;
 	std::string		returnName() const;
