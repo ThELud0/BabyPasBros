@@ -38,13 +38,13 @@ sf::Color couleurAleatoire() {
 	}
 }
 
-float invertOrNot(float x) {
+float invertOrNot(int x) {
 	int choix = rando(0,1);
 	if (choix == 0) {
-		return x;
+		return static_cast<float>(x);
 	}
 	else {
-		return -x;
+		return static_cast<float>(-x);
 	}
 }
 
@@ -127,6 +127,8 @@ void Game::processEvents()
 					levels[curLevel]->setTexture(textures);
 					levels[curLevel]->drawCurrent(mWindow);
 					mWindow.setTitle(levels[curLevel]->returnName());
+					altView.setCenter(sf::Vector2f(235.f, 1288.f));
+					altView.setSize(sf::Vector2f(5270.f, 4176.f));
 				}
 				break;
 
@@ -145,7 +147,7 @@ void Game::processEvents()
 	}
 }
 
-void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &textures) const {
+void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &texturesTable) const {
 	sf::Texture	babyLeft;
 	sf::Texture	babyRight;
 	sf::Texture groundCloud;
@@ -190,27 +192,27 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 		exit(1);
 	}
 
-	textures.try_emplace("babyleft", babyLeft);
-	textures.try_emplace("babyright", babyRight);
-	textures.try_emplace("groundCloud", groundCloud);
-	textures.try_emplace("flippedCloud", flippedCloud);
-	textures.try_emplace("closedDoor", closedDoor);
-	textures.try_emplace("openedDoor", openedDoor);
-	textures.try_emplace("openDoorText", openDoorText);
+	texturesTable.try_emplace("babyleft", babyLeft);
+	texturesTable.try_emplace("babyright", babyRight);
+	texturesTable.try_emplace("groundCloud", groundCloud);
+	texturesTable.try_emplace("flippedCloud", flippedCloud);
+	texturesTable.try_emplace("closedDoor", closedDoor);
+	texturesTable.try_emplace("openedDoor", openedDoor);
+	texturesTable.try_emplace("openDoorText", openDoorText);
 
 }
 
-void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture, std::less<>> &textures, std::vector<std::unique_ptr<Group>> &levels) {
+void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::string, const sf::Texture, std::less<>> &texturesTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
 	
 	for (int i = 0;i < nbCercles;++i) {
-		float radius = rando(10, 50);
+		int radius = rando(10, 50);
 		sf::Color couleur = couleurAleatoire();
-		float x = rando(0, mWindow.getSize().x - 2 * radius);
-		float y = rando(0, mWindow.getSize().y - 2 * radius);
+		int x = rando(0, static_cast<int>(mWindow.getSize().x - 2 * radius));
+		int y = rando(0, static_cast<int>(mWindow.getSize().y - 2 * radius));
 		float xspeed = invertOrNot(rando(1, 100));
-		float yspeed = invertOrNot(sqrt(100 * 100 - xspeed * xspeed));
-		RoundTarget target{ radius, couleur, x, y, xspeed, yspeed };
-		mTargets.push_back(target);
+		float yspeed = invertOrNot(static_cast<int>(sqrt(100 * 100 - xspeed * xspeed)));
+		RoundTarget target{ static_cast<float>(radius), couleur, static_cast<float>(x), static_cast<float>(y), xspeed, yspeed };
+		mTargetsTable.push_back(target);
 	}
 
 	pugi::xml_document doc;
@@ -220,19 +222,18 @@ void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, 
 		exit(1);
 	}
 
-	const pugi::xml_node& node = doc.child("Monde");
 	
-	for (auto const& child : node)
+	for (auto const& child : doc.child("Monde"))
 	{
 		std::cout << child.name() << "\n";
 		auto grp = std::make_unique<Group>(child);
-		grp->setTexture(textures);
-		levels.push_back(std::move(grp));
+		grp->setTexture(texturesTable);
+		levelsTable.push_back(std::move(grp));
 	}
 	
 	mWindow.setTitle(levels[0] -> returnName());
 	
-	levels[0]->setTexture(textures);
+	levelsTable[0]->setTexture(texturesTable);
 	
 }
 
@@ -248,11 +249,13 @@ void Game::update(sf::Time elapsedTime)
 			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);
 			altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
 				altView.getCenter().y);
+			canStart = false;
 		}
 		if (altView.getSize().y > 768) {
 			altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f / startingAnimationTime));
 			altView.setCenter(altView.getCenter().x,
 				(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
+			canStart = false;
 		}
 
 		if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
@@ -312,7 +315,7 @@ void Game::updateStatistics(sf::Time elapsedTime)
 		mStatisticsText.setCharacterSize(60);
 		sf::FloatRect textRect = mStatisticsText.getLocalBounds();
 		mStatisticsText.setOrigin(textRect.left + textRect.width / 2.0f,textRect.top + textRect.height / 2.0f);
-		mStatisticsText.setPosition(sf::Vector2f(mWindow.getSize().x / 2.0f, mWindow.getSize().y / 2.0f));
+		mStatisticsText.setPosition(sf::Vector2f(static_cast<float>(mWindow.getSize().x) / 2.0f, static_cast<float>(mWindow.getSize().y) / 2.0f));
 		mStatisticsText.setString("Loading...");
 	}
 

@@ -20,22 +20,22 @@ vertical(node.attribute("vertical").as_bool()) {
 
 void Door::drawCurrent(sf::RenderWindow& window) const {
 	window.draw(wShape);
-	if ((isNear) && (physical)) {
+	if (isNear && physical) {
 		window.draw(doorText);
 	}
 
 }
 
 void Door::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
-	for (auto& pair : textures) {
-		if ((pair.first == "closedDoor") && (vertical)) {
-			wShape.setTexture(&pair.second);
+	for (auto const& [keyName,value] : textures) {
+		if ((keyName == "closedDoor") && vertical) {
+			wShape.setTexture(&value);
 		}
-		else if ((pair.first == "flippedClosedDoor") && (!vertical)) {
-			wShape.setTexture(&pair.second);
+		else if ((keyName == "flippedClosedDoor") && (!vertical)) {
+			wShape.setTexture(&value);
 		}
-		else if (pair.first == "openDoorText") {
-			doorText.setTexture(&pair.second);
+		else if (keyName == "openDoorText") {
+			doorText.setTexture(&value);
 		}
 	}
 
@@ -67,23 +67,23 @@ void Door::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elap
 	//on récupère la position actuelle et taille du joueur 
 	float xPlayer = mcPos.x;
 	float yPlayer = mcPos.y;
-	int widPlayer = mcSize.x;
-	int heiPlayer = mcSize.y;
+	float widPlayer = mcSize.x;
+	float heiPlayer = mcSize.y;
 
 	float xWall = x;
 	float yWall = y;
-	int widWall = width;
-	int heiWall = height;
+	auto widWall = static_cast<float>(width);
+	auto heiWall = static_cast<float>(height);
 
 	//joueur au dessus de la porte
 	if ((yPlayer < yWall) && (xPlayer + widPlayer > xWall) && (xPlayer < xWall + widWall)
-		&&(yPlayer + static_cast<float>(heiPlayer)*1.5  >= yWall)) {
+		&&(yPlayer + heiPlayer*1.5  >= yWall)) {
 		isNear = true;
 	}
 
 	//joueur en dessous de la porte
-	if ((yPlayer + static_cast<float>(heiPlayer) > yWall + heiWall) && (xPlayer + widPlayer > xWall) 
-		&& (xPlayer < xWall + widWall)&& (yPlayer - static_cast<float>(heiPlayer) * 0.25 <= yWall + heiWall)) {
+	if ((yPlayer + heiPlayer > yWall + heiWall) && (xPlayer + widPlayer > xWall) 
+		&& (xPlayer < xWall + widWall)&& (yPlayer - heiPlayer * 0.25 <= yWall + heiWall)) {
 		isNear = true;
 	}
 
@@ -103,24 +103,24 @@ void Door::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elap
 
 void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 
-	for (auto& pair : textures) {
+	for (auto const&  [keyName,value] : textures) {
 		if (physical) {
-			if ((pair.first == "closedDoor") && (vertical)) {
-				wShape.setTexture(&pair.second);
+			if ((keyName == "closedDoor") && vertical) {
+				wShape.setTexture(&value);
 			}
-			else if ((pair.first == "flippedClosedDoor") && (!vertical)) {
-				wShape.setTexture(&pair.second);
+			else if ((keyName == "flippedClosedDoor") && (!vertical)) {
+				wShape.setTexture(&value);
 			}
 		}
 		else if (!physical) {
-			if ((pair.first == "openedDoor") && (vertical)) {
-				wShape.setTexture(&pair.second,true);
-				wShape.setSize(sf::Vector2f(width * 1.5, height));
+			if ((keyName == "openedDoor") && vertical) {
+				wShape.setTexture(&value,true);
+				wShape.setSize(sf::Vector2f(static_cast<float>(width) * static_cast<float>(1.5), static_cast<float>(height)));
 
 				
 			}
-			else if ((pair.first == "flippedOpenedDoor") && (!vertical)) {
-				wShape.setTexture(&pair.second);
+			else if ((keyName == "flippedOpenedDoor") && (!vertical)) {
+				wShape.setTexture(&value);
 			}
 		}
 	}
@@ -128,7 +128,7 @@ void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::str
 }
 
 void Door::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
-	if ((key == sf::Keyboard::E)&&(physical)&&(isNear)&&(isPressed)){
+	if ((key == sf::Keyboard::E)&&physical&&isNear&&isPressed){
 		physical = false;
 	}
 }

@@ -37,7 +37,7 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 /// <param name="textures"></param>
 void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->setTexture(textures);
-	for (auto& entity : children) {
+	for (auto const& entity : children) {
 		entity->setTexture(textures);
 	}
 	
@@ -51,14 +51,14 @@ void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& te
 /// <param name="textures"></param>
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
-	for (auto& entity : children) {
+	for (auto const& entity : children) {
 		entity->update(elapsedTime, view, textures);
 	}
 	
 }
 
 void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) {
-	for (auto& entity : children) {
+	for (auto const& entity : children) {
 		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime, entity->getPhysicalState());
 		entity->collide(mcPos, mcSize, elapsedTime, physical);
 	}

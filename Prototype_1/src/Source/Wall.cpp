@@ -3,7 +3,7 @@ using namespace std::literals;
 
 Wall::Wall(float x, float y, int height, int width, const bool &vertical) : Entity{ x, y, height, width }, vertical(vertical) {
 	wShape.setPosition(x, y);
-	wShape.setSize(sf::Vector2f(width, height));
+	wShape.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(height)));
 
 }
 
@@ -18,12 +18,12 @@ void Wall::drawCurrent(sf::RenderWindow& window) const {
 }
 
 void Wall::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
-	for (auto& pair : textures) {
-		if ((pair.first == "groundCloud")&&(!vertical)) {
-			wShape.setTexture(&pair.second);
+	for (auto const& [keyName,value] : textures) {
+		if ((keyName == "groundCloud")&&(!vertical)) {
+			wShape.setTexture(&value);
 		}
-		else if ((pair.first == "flippedCloud")&&(vertical)) {
-			wShape.setTexture(&pair.second);
+		else if ((keyName == "flippedCloud")&&vertical) {
+			wShape.setTexture(&value);
 		}
 	}
 }
