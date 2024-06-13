@@ -1,0 +1,112 @@
+@startuml
+
+title BabyPasBros - Class Diagram
+
+
+class Game {
+void  run();
+void  processEvents();
+void  update(sf::Time elapsedTime);
+void  render();
+void  initialize(...);
+void  initTextures(...);
+void  updateStatistics(sf::Time elapsedTime);	
+
+
+map<string,const sf::Texture> textures;
+int                                                           nbCercles;
+vector<unique_ptr<Group>>   levels;
+int                                                           curLevel;
+vector<RoundTarget>                        mTargets;
+}
+
+
+class Main
+
+
+class RoundTarget
+
+
+class Entity {
+explicit				Entity(float x, float y, int hei, int wid) ;
+explicit				Entity(const pugi::xml_node& node);
+virtual void			setTexture(...) = 0;
+virtual void			drawCurrent(sf::RenderWindow& window) const = 0;
+virtual sf::Vector2f  	getPos() = 0 ;
+virtual sf::Vector2f  	getSiz() = 0 ;
+virtual void			update(...) = 0;
+virtual void			collide(...) = 0;
+virtual void			handlePlayerInput(...) = 0;
+bool					getPhysicalState();
+
+float         x;
+float         y;
+int           height;
+int           width;
+bool          physical;
+
+}
+
+
+class Wall {
+explicit    Wall(float x, float y, int height, int width, const bool &vertical);
+explicit    Wall(const pugi::xml_node& node);
+sf::RectangleShape  wShape;
+const bool                  vertical;
+}
+
+
+class Door {
+explicit  Door(float x, float y, int height, int width, const bool& vertical);
+explicit  Door(const pugi::xml_node& node);
+bool      isVertical() const;
+sf::RectangleShape  wShape;
+const bool                  vertical;
+bool                              isNear;
+sf::RectangleShape  doorText;
+}
+
+
+class Player{
+explicit              Player(float x, float y, int height, int width);
+explicit              Player(const pugi::xml_node& node);
+sf::Sprite          getSelf();
+void                  dragTowards(sf::Vector2f targetPos);
+
+float               PlayerSpeed;
+float               acceleration;
+float               maxGravity;
+sf::Sprite          mChar;
+sf::Vector2f    dragMovement;
+bool                mIsMovingUp;
+... //Down, Left, Right
+bool                collideUp;
+... //Down, Left, Right
+bool                dragging;
+}
+
+
+class Group {
+explicit  Group(const pugi::xml_node& node);
+void       dragTowards(sf::Vector2f targetPos);
+string    returnName() const;
+string const                                windowName;
+vector<unique_ptr<Entity>>  children;
+unique_ptr<Player>                  mainCharacter;
+}
+
+
+
+
+Main *-- Game
+Game "1" *-up- "*" RoundTarget
+Game "1" *--- "*" Group
+Entity <|-- Wall
+Entity <|-- Player
+Entity <|-- Group
+Entity <|-- Door
+Group "1" *-- "*" Wall
+Group "1" *-- "1" Player
+Group "1" *-- "*" Door
+
+@enduml
