@@ -84,13 +84,13 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		/// qu'il atteint le sommet de son saut.
 		if (acceleration < maxGravity / 4)
 			acceleration += 10.f;
-		if ((acceleration >= maxGravity / 4) && (acceleration < maxGravity ))
+		if ((acceleration >= maxGravity / 4) && (acceleration < maxGravity))
 			acceleration += 25.f;
 		///un mouvement vers le bas consiste juste à faire tomber le personnage plus vite 
 		/// lorsqu'il est en l'air, limité au maximum de la gravité
 		if (mIsMovingDown && (acceleration + 50.f < maxGravity))
 			acceleration += 50.f;
-		movement.y += acceleration;
+		
 	}
 	
 	///si un saut a été enclenché et qu'il n'y a pas d'obstacle en hauteur, le personnage saute.
@@ -116,9 +116,13 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		}
 	}
 
+	//on "override" les instructions provenant du clavier pour harponner le joueur vers un RoundTarget si un a été cliqué
 	if (dragging) {
 		movement = dragMovement;
 	}
+
+	movement.y += acceleration;
+
 
 	mChar.move(movement * elapsedTime.asSeconds());
 	
@@ -136,8 +140,8 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 	}
 	///idem pour les bords verticaux de la vue.
 	if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 2)) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y))) {
-
 		view.move(0.f, movement.y * elapsedTime.asSeconds());
+
 		if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 2) + 1) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y) - 1)) {
 			view.move(0.f, mChar.getPosition().y - view.getCenter().y);
 		}
@@ -233,12 +237,19 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 
 }
 
+//tire le joueur vers la position d'un RoundTarget mourant (sans traverser les obstacles sur son chemin)
 void Player::dragTowards(sf::Vector2f targetPos) {
 	dragging = true;
 	sf::Vector2f movement(0.f, 0.f);
 
-	if ((targetPos.y < mChar.getPosition().y) && (!collideUp))
-		movement.y -= PlayerSpeed * 2;
+	//si le joueur a atteint la hauteur du RoundTarget on se contente de l'empécher de tomber
+	if ((targetPos.y <= mChar.getPosition().y + PlayerSpeed * 2)&& (targetPos.y >= mChar.getPosition().y)) {
+		movement.y -= acceleration;
+	}
+	//sinon on le tire vers le RoundTarget
+	else if ((targetPos.y < mChar.getPosition().y) && (!collideUp)) {
+		movement.y -= PlayerSpeed * 2 + acceleration;
+	}
 
 	if ((targetPos.x < mChar.getPosition().x + static_cast<float>(width) / 3.f) && (!collideLeft)) {
 		movement.x -= PlayerSpeed;

@@ -80,8 +80,6 @@ void Game::run()
 	initialize(mTargets, textures,levels);
 
 
-
-
 	while (mWindow.isOpen())
 	{
 		sf::Time elapsedTime = clock.restart();
@@ -110,9 +108,10 @@ void Game::processEvents()
 				mWindow.close();
 				break;
 			case sf::Event::MouseButtonPressed:
+				// Tue les RoundTargets, et au passage harponne le personnage vers le RoundTarget cliqué
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
-					mWindow.setView(altView);
+					mWindow.setView(altView); // Pour avoir la bonne position de la souris par rapport au Roundtarget quon voit, il faut se mettre sur la bonne vue
 					for (auto target = mTargets.rbegin(); target != mTargets.rend(); ++target) {
 						if ((target->isHitByMouse(mWindow.mapPixelToCoords(sf::Mouse::getPosition(mWindow))))&&(target->getStatus()==RoundTargetStatus::Alive)) {
 							std::next(target).base() -> setStatus(RoundTargetStatus::Dying);
@@ -121,8 +120,8 @@ void Game::processEvents()
 					}
 					mWindow.setView(mWindow.getDefaultView());
 				}
+				// Passe au niveau suivant si clique droit, à changer pour que le passage de niveau soit déclenché par un autre évènement du jeu...
 				else if (event.mouseButton.button == sf::Mouse::Right) {
-					
 					++curLevel;
 					levels[curLevel]->setTexture(textures);
 					levels[curLevel]->drawCurrent(mWindow);
@@ -139,7 +138,6 @@ void Game::processEvents()
 				levels[curLevel]->handlePlayerInput(event.key.code, false);
 				break;
 
-
             default:
                 // We simply ignore all other events
                 break;
@@ -147,6 +145,12 @@ void Game::processEvents()
 	}
 }
 
+/// <summary>
+/// Ajoute toutes les textures des éléments à un tableau de textures qui sera récupérable
+/// par toutes les instances de classes du jeu, pour que celles avec une texture en commun utilisent
+/// toutes la même en pointant vers celle du tableau.
+/// </summary>
+/// <param name="texturesTable"></param>
 void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &texturesTable) const {
 	sf::Texture	babyLeft;
 	sf::Texture	babyRight;
@@ -203,7 +207,7 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 }
 
 void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::string, const sf::Texture, std::less<>> &texturesTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
-	
+	//initialise les RoundTargets
 	for (int i = 0;i < nbCercles;++i) {
 		int radius = rando(10, 50);
 		sf::Color couleur = couleurAleatoire();
@@ -222,7 +226,8 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::str
 		exit(1);
 	}
 
-	
+	//On lit le fichier xml du monde et on charge tous les éléments de chaque niveau dans un groupe respectivement, puis on ajoute tous ces groupes
+	//à un vecteur de niveaux.
 	for (auto const& child : doc.child("Monde"))
 	{
 		std::cout << child.name() << "\n";
@@ -230,11 +235,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::str
 		grp->setTexture(texturesTable);
 		levelsTable.push_back(std::move(grp));
 	}
-	
-	mWindow.setTitle(levels[0] -> returnName());
-	
-	levelsTable[0]->setTexture(texturesTable);
-	
+
 }
 
 void Game::update(sf::Time elapsedTime)
@@ -243,36 +244,38 @@ void Game::update(sf::Time elapsedTime)
 	if (loadingTime > 0)
 		--loadingTime;
 
-	///animation de départ qui zoom vers la "vraie fenêtre" de jeu
+	///animation qui zoom vers la "vraie fenêtre" de jeu au début et à chaque changement de niveau
 	if (loadingTime <= 0) {
+		
 		if (altView.getSize().x > 1024) {
+			//on réduit la longueur de la vue
 			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);
+			//on garde la vue proche du personnage
 			altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
 				altView.getCenter().y);
 			canStart = false;
 		}
 		if (altView.getSize().y > 768) {
+			//on réduit la hauteur de la vue
 			altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f / startingAnimationTime));
+			//on garde la vue proche du personnage
 			altView.setCenter(altView.getCenter().x,
 				(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
 			canStart = false;
 		}
-
 		if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
 			altView.setSize(sf::Vector2f(1024, 768));
 			canStart = true;
 		}
 	}
-
-
-	if (mTargets.empty()) {
-		mWindow.close();
-	}
+	//gère l'animation lorsque les RoundTargets meurent
 	for (auto target = mTargets.begin(); target != mTargets.end(); ++target) {
+		//on retire de la liste un RoundTarget mort
 		if (target -> getStatus() == RoundTargetStatus::Dead) {
 			mTargets.erase(target);
 			break;	
 		}
+		//on anime le roundTarget entrain de mourir
 		else if (target -> getStatus() == RoundTargetStatus::Dying) {
 			target -> isDying();
 			levels[curLevel]->dragTowards(target->getShape().getPosition());
@@ -280,6 +283,7 @@ void Game::update(sf::Time elapsedTime)
 		target -> update(elapsedTime, altView);
 	}
 	if (canStart) {
+		//on met à jour tous les éléments du niveau actuel
 		levels[curLevel]->update(elapsedTime, altView, textures);
 		levels[curLevel]->collide(levels[curLevel]->getPos(), levels[curLevel]->getSiz(), elapsedTime, true);
 	}
@@ -300,7 +304,7 @@ void Game::render()
 
 	levels[curLevel]->drawCurrent(mWindow);
 
-	mWindow.setView(mWindow.getDefaultView());
+	mWindow.setView(mWindow.getDefaultView()); //on dessine les éléments du jeu qui vont glisser dans la vue alternative, et ceux de l'UI dans la vue par défaut qui ne bouge pas
 	mWindow.draw(mStatisticsText);
 	mWindow.display();
 }

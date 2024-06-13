@@ -20,6 +20,7 @@ vertical(node.attribute("vertical").as_bool()) {
 
 void Door::drawCurrent(sf::RenderWindow& window) const {
 	window.draw(wShape);
+	//si la porte est fermée et le joueur proche de la porte, le texte pour l'ouvrir s'affiche
 	if (isNear && physical) {
 		window.draw(doorText);
 	}
@@ -104,6 +105,7 @@ void Door::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elap
 void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 
 	for (auto const&  [keyName,value] : textures) {
+		//si la porte est physique = non franchissable = fermée on montre la porte fermée
 		if (physical) {
 			if ((keyName == "closedDoor") && vertical) {
 				wShape.setTexture(&value);
@@ -112,22 +114,24 @@ void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::str
 				wShape.setTexture(&value);
 			}
 		}
+		//sinon on montre la porte ouverte!
 		else if (!physical) {
 			if ((keyName == "openedDoor") && vertical) {
 				wShape.setTexture(&value,true);
-				wShape.setSize(sf::Vector2f(static_cast<float>(width) * static_cast<float>(1.5), static_cast<float>(height)));
-
-				
+				wShape.setSize(sf::Vector2f(static_cast<float>(width) * static_cast<float>(1.5), static_cast<float>(height)));				
 			}
 			else if ((keyName == "flippedOpenedDoor") && (!vertical)) {
 				wShape.setTexture(&value);
 			}
 		}
 	}
+
+	//on reset isNear à false, update() la mettra à true s'il le faut
 	isNear = false;
 }
 
 void Door::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
+	//si le joueur est proche et qu'il a cliqué sur la touche indiquée, la porte s'ouvre
 	if ((key == sf::Keyboard::E)&&physical&&isNear&&isPressed){
 		physical = false;
 	}

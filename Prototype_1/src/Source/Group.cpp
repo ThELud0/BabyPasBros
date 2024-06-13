@@ -6,7 +6,7 @@ using namespace std::literals;
 /// lecture d'un node xml représentant un niveau dont le nom est donné dans un label, qui sera utilisé pour nommer la fenêtre 
 /// de jeu du-dit niveau
 /// les éléments du niveau sont initialisés dans un groupe constitué d'un joueur MainCharacter
-/// et (pour l'instant) d'une liste de murs Wall.
+/// et (pour l'instant) d'une liste de murs Wall et de portes Door.
 /// </summary>
 /// <param name="node"> le node contenant les informations du niveau à stocker dans le groupe</param>
 Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.attribute("label").as_string()) {
@@ -56,7 +56,13 @@ void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::st
 	}
 	
 }
-
+/// <summary>
+/// Appelle la fonction collide du mainCharacter et des éléments du groupe.
+/// </summary>
+/// <param name="mcPos"></param>
+/// <param name="mcSize"></param>
+/// <param name="elapsedTime"></param>
+/// <param name="physical"></param>
 void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) {
 	for (auto const& entity : children) {
 		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime, entity->getPhysicalState());
@@ -69,7 +75,6 @@ void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& ela
 /// </summary>
 /// <param name="window"></param>
 void Group::drawCurrent(sf::RenderWindow& window) const {
-	
 	for (auto const& entity : children) {
 		entity->drawCurrent(window);
 	}
@@ -103,7 +108,7 @@ void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPresse
 		entity->handlePlayerInput(key,isPressed);
 	}
 }
-
+//harponne le joueur vers le RoundTarget cliqué
 void Group::dragTowards(sf::Vector2f targetPos) {
 	mainCharacter->dragTowards(targetPos);
 }
