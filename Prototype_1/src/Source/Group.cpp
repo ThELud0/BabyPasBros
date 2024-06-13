@@ -35,7 +35,7 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 /// La texture choisie pour chaque objet est définie selon une règle dans la fonction setTexture de leur classe.
 /// </summary>
 /// <param name="textures"></param>
-void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
+void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->setTexture(textures);
 	for (auto& entity : children) {
 		entity->setTexture(textures);
@@ -49,7 +49,7 @@ void Group::setTexture(std::map<std::string, const sf::Texture>& textures) {
 /// <param name="elapsedTime"></param>
 /// <param name="view"></param>
 /// <param name="textures"></param>
-void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {
+void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
 	for (auto& entity : children) {
 		entity->update(elapsedTime, view, textures);

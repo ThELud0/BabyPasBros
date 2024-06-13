@@ -18,14 +18,14 @@ class Game : private sf::NonCopyable
 		void					processEvents();
 		void					update(sf::Time elapsedTime);
 		void					render();
-		void					initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture> &textures, std::vector<std::unique_ptr<Group>> &levels);
-		void					initTextures(std::map<std::string, const sf::Texture> &textures);
+		void					initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture, std::less<>> &textures, std::vector<std::unique_ptr<Group>> &levels);
+		void					initTextures(std::map<std::string, const sf::Texture, std::less<>> &textures) const;
 		void					updateStatistics(sf::Time elapsedTime);	
 
 		static const sf::Time	TimePerFrame;
 		
 
-		std::map<std::string,const sf::Texture> textures;
+		std::map<std::string,const sf::Texture, std::less<>> textures;
 		bool									canStart{ false };
 		int										nbCercles = 10;
 

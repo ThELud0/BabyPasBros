@@ -26,7 +26,7 @@ void Door::drawCurrent(sf::RenderWindow& window) const {
 
 }
 
-void Door::setTexture(std::map<std::string, const sf::Texture>& textures) {
+void Door::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	for (auto& pair : textures) {
 		if ((pair.first == "closedDoor") && (vertical)) {
 			wShape.setTexture(&pair.second);
@@ -101,7 +101,7 @@ void Door::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elap
 
 }
 
-void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {
+void Door::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 
 	for (auto& pair : textures) {
 		if (physical) {

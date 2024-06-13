@@ -25,7 +25,7 @@ Player::Player(const pugi::xml_node& node) : Entity{node} {
 /// Permet de donner la texture initiale du joueur lors de son apparition.
 /// </summary>
 /// <param name="textures"></param>
-void Player::setTexture(std::map<std::string, const sf::Texture> &textures) {
+void Player::setTexture(std::map<std::string, const sf::Texture, std::less<>> &textures) {
 	///on parcourt la map des textures
 	for (auto &pair : textures) {
 		///on récupère une texture du bébé par défaut
@@ -71,7 +71,7 @@ void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPress
 /// <param name="elapsedTime"></param>
 /// <param name="view"></param>
 /// <param name="babyTextures"></param>
-void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string,const sf::Texture>& babyTextures) {
+void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string,const sf::Texture, std::less<>>& babyTextures) {
 	sf::Vector2f movement(0.f, 0.f);
 	std::string key("");
 

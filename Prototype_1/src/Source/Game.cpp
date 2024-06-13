@@ -54,7 +54,7 @@ Game::Game()
 {
 	mFont.loadFromFile("media/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
-	mStatisticsText.setColor(sf::Color::Black);
+	mStatisticsText.setFillColor(sf::Color::Black);
 	
 }
 
@@ -145,7 +145,7 @@ void Game::processEvents()
 	}
 }
 
-void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
+void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &textures) const {
 	sf::Texture	babyLeft;
 	sf::Texture	babyRight;
 	sf::Texture groundCloud;
@@ -190,17 +190,17 @@ void Game::initTextures(std::map<std::string, const sf::Texture> &textures) {
 		exit(1);
 	}
 
-	textures.insert(std::make_pair("babyleft", babyLeft));
-	textures.insert(std::make_pair("babyright", babyRight));
-	textures.insert(std::make_pair("groundCloud", groundCloud));
-	textures.insert(std::make_pair("flippedCloud", flippedCloud));
-	textures.insert(std::make_pair("closedDoor", closedDoor));
-	textures.insert(std::make_pair("openedDoor", openedDoor));
-	textures.insert(std::make_pair("openDoorText", openDoorText));
+	textures.try_emplace("babyleft", babyLeft);
+	textures.try_emplace("babyright", babyRight);
+	textures.try_emplace("groundCloud", groundCloud);
+	textures.try_emplace("flippedCloud", flippedCloud);
+	textures.try_emplace("closedDoor", closedDoor);
+	textures.try_emplace("openedDoor", openedDoor);
+	textures.try_emplace("openDoorText", openDoorText);
 
 }
 
-void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture> &textures, std::vector<std::unique_ptr<Group>> &levels) {
+void Game::initialize(std::vector<RoundTarget> &mTargets, std::map<std::string, const sf::Texture, std::less<>> &textures, std::vector<std::unique_ptr<Group>> &levels) {
 	
 	for (int i = 0;i < nbCercles;++i) {
 		float radius = rando(10, 50);

@@ -6,10 +6,10 @@ class Player : public Entity {
 public:
     explicit Player(float x, float y, int height, int width);
     explicit Player(const pugi::xml_node& node);
-    void                    setTexture(std::map<std::string, const sf::Texture> &textures) override;
+    void                    setTexture(std::map<std::string, const sf::Texture, std::less<>> &textures) override;
     void					drawCurrent(sf::RenderWindow& window) const override;
     void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override;
-    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& babyTextures) override;
+    void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& babyTextures) override;
     sf::Sprite              getSelf();
     void                    collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) override;
     sf::Vector2f            getPos() override;

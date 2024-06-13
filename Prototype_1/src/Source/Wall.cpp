@@ -17,7 +17,7 @@ void Wall::drawCurrent(sf::RenderWindow& window) const {
 	window.draw(wShape);
 }
 
-void Wall::setTexture(std::map<std::string, const sf::Texture>& textures) {
+void Wall::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	for (auto& pair : textures) {
 		if ((pair.first == "groundCloud")&&(!vertical)) {
 			wShape.setTexture(&pair.second);
@@ -45,7 +45,7 @@ bool Wall::isVertical() const{
 void Wall::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) {//No interactions
 }
 
-void Wall::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture>& textures) {//No interactions
+void Wall::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {//No interactions
 }
 
 void Wall::handlePlayerInput(const sf::Keyboard::Key & key, const bool& isPressed) {//No interactions 
