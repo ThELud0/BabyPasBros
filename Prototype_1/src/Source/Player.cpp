@@ -84,7 +84,7 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		/// qu'il atteint le sommet de son saut.
 		if (acceleration < maxGravity / 4)
 			acceleration += 10.f;
-		if ((acceleration >= maxGravity / 4) && (acceleration < maxGravity))
+		if ((acceleration >= maxGravity / 4) && (acceleration + 25.f < maxGravity))
 			acceleration += 25.f;
 		///un mouvement vers le bas consiste juste à faire tomber le personnage plus vite 
 		/// lorsqu'il est en l'air, limité au maximum de la gravité
@@ -104,6 +104,13 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		movement.x += PlayerSpeed;
 	}
 
+	//on "override" les instructions provenant du clavier pour harponner le joueur vers un RoundTarget si un a été cliqué
+	if (dragging) {
+		movement = dragMovement;
+	}
+
+	movement.y += acceleration;
+
 	if (movement.x > 0)
 		key = "babyright";
 	else if (movement.x < 0)
@@ -115,14 +122,6 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 			mChar.setTexture(value);
 		}
 	}
-
-	//on "override" les instructions provenant du clavier pour harponner le joueur vers un RoundTarget si un a été cliqué
-	if (dragging) {
-		movement = dragMovement;
-	}
-
-	movement.y += acceleration;
-
 
 	mChar.move(movement * elapsedTime.asSeconds());
 	
@@ -200,8 +199,8 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 		if ((yPlayer < yWall) && (xPlayer + static_cast<float>(width) > xWall) && (xPlayer < xWall + widWall)
 			/// on laisse le joueur s'enfoncer légèrement dans le mur (à un quart de sa taille) purement pour l'aspect esthetique.
 			/// on regarde si le prochain mouvement vers le bas du joueur rentre en collision avec le mur. 
-			/// le mouvement le plus rapide dont le joueur est capable vers le bas est à la vitesse maxGravity, atténuée par sa vitesse de saut
-			&& (yPlayer + static_cast<float>(height) + maxGravity*elapsedTime.asSeconds() >= yWall + static_cast<float>(height) / 4)) 
+			/// le mouvement le plus rapide dont le joueur est capable vers le bas est à la vitesse maxGravity
+			&& (yPlayer + static_cast<float>(height) + maxGravity*elapsedTime.asSeconds() > yWall + static_cast<float>(height) / 4)) 
 		{
 			collideDown = true;
 			///si le joueur touche le sol, son acceleration due à la gravité retourne à zéro 
@@ -216,6 +215,11 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (yPlayer - 3 * PlayerSpeed * elapsedTime.asSeconds() <= yWall + heiWall - static_cast<float>(height) / 6)) 
 		{
 			collideUp = true;
+			if (mIsMovingUp) {
+				acceleration = PlayerSpeed * 3 + 10;
+				
+			}
+
 		}
 
 		//joueur à gauche du mur
@@ -225,6 +229,8 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (xPlayer + static_cast<float>(width) + PlayerSpeed * elapsedTime.asSeconds() >= xWall)) 
 		{
 			collideRight = true;
+
+				
 		}
 		//joueur à droite du mur
 		if ((xPlayer + static_cast<float>(width) > xWall + widWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + static_cast<float>(height) > yWall + static_cast<float>(height) / 4)
@@ -232,6 +238,8 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (xPlayer - PlayerSpeed * elapsedTime.asSeconds() <= xWall + widWall)) 
 		{
 			collideLeft = true;
+
+			
 		}
 	}
 
