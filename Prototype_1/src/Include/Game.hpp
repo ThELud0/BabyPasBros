@@ -29,9 +29,7 @@ class Game : private sf::NonCopyable
 		bool									canStart{ false };
 		int										nbCercles = 10;
 
-		// on veut une taille 1024,768 en jeu donc il faudra supprimer des pixels dans l'animation de départ
-		// 5270 - 1024 = 4246  pixels horizontaux à éliminer au départ pour revenir à la taille de fenêtre normale
-		// 4176 - 768 = 3408  pixels verticaux à éliminer au départ pour revenir à la taille de fenêtre normale
+		// on veut une taille 1024,768 en jeu donc il faudra supprimer des pixels dans l'animation de départ pour "zoomer" vers la bonne taille de vue
 		//les valeurs d'initialisation ont été choisies pour une image de départ spécifique, attention aux modifications!!
 		sf::View								altView{sf::Vector2f(235.f,1288.f),sf::Vector2f(5270.f, 4176.f)}; 
 
