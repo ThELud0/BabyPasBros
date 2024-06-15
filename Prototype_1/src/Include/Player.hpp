@@ -19,7 +19,7 @@ public:
 private:
     float                   PlayerSpeed = 200.f;
     float                   acceleration = 0.f;
-    float                   maxGravity = 1000.f;
+    float                   maxGravity;
     sf::Sprite			    mChar;
     sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
