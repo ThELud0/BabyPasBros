@@ -91,6 +91,13 @@ void Game::run()
 	harpsound.setVolume(20);
 	harpsound.play();
 
+	sf::Music lullaby;
+	if (!lullaby.openFromFile("media/lullaby.wav"))
+		std::cerr << "unable to load music\n";
+	lullaby.setLoop(true);
+	lullaby.setVolume(20);
+	lullaby.play();
+
 	while (mWindow.isOpen())
 	{
 		sf::Time elapsedTime = clock.restart();
