@@ -77,8 +77,19 @@ void Game::run()
 
 	//Initialise les autres éléments du jeu (textures, joueur, murs...)
 	initTextures(textures);
+	initSoundBuffers(soundBuffers);
 	initialize(mTargets, textures,levels);
 
+
+	// load harp sound from buffer table
+	sf::Sound harpsound;
+	for (auto const& [keyName, value] : soundBuffers) {
+		if (keyName == "harp") {
+			harpsound.setBuffer(value);
+		}
+	}
+	harpsound.setVolume(10);
+	harpsound.play();
 
 	while (mWindow.isOpen())
 	{
@@ -205,6 +216,23 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	texturesTable.try_emplace("openDoorText", openDoorText);
 
 }
+
+/// <summary>
+/// Ajoute toutes les buffer audio à un tableau de soundBuffer récupérable par toutes les instances de classes du jeu,
+/// pour que celles avec des sons communs utilisent toutes le même en pointant vers celui du tableau.
+/// </summary>
+/// <param name="soundBuffersTable"></param>
+void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffersTable) const {
+	sf::SoundBuffer harp;
+
+	if (!harp.loadFromFile("media/harp.wav")) {
+		std::cout << "unable to load audio media\n";
+		exit(1);
+	}
+
+	soundBuffersTable.try_emplace("harp", harp);
+}
+
 
 void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::string, const sf::Texture, std::less<>> &texturesTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
 	//initialise les RoundTargets
