@@ -92,7 +92,7 @@ void Game::run()
 	harpsound.play();
 
 	sf::Music lullaby;
-	if (!lullaby.openFromFile("media/lullaby.wav"))
+	if (!lullaby.openFromFile("media/lullaby.mp3"))
 		std::cerr << "unable to load music\n";
 	lullaby.setLoop(true);
 	lullaby.setVolume(20);
@@ -238,46 +238,41 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	sf::SoundBuffer knock2;
 	sf::SoundBuffer knock3;
 	sf::SoundBuffer hit;
-	sf::SoundBuffer ambiant1;
-	sf::SoundBuffer ambiant2;
+	sf::SoundBuffer rope;
 
-	if (!harp.loadFromFile("media/harp.wav")) {
+	if (!harp.loadFromFile("media/harp.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!door.loadFromFile("media/door.wav")) {
+	if (!door.loadFromFile("media/door.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!babydie.loadFromFile("media/babydie.wav")) {
+	if (!babydie.loadFromFile("media/babydie.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!jump.loadFromFile("media/jump.wav")) {
+	if (!jump.loadFromFile("media/jump.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock1.loadFromFile("media/knock1.wav")) {
+	if (!knock1.loadFromFile("media/knock1.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock2.loadFromFile("media/knock2.wav")) {
+	if (!knock2.loadFromFile("media/knock2.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock3.loadFromFile("media/knock3.wav")) {
+	if (!knock3.loadFromFile("media/knock3.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!hit.loadFromFile("media/hit.wav")) {
+	if (!hit.loadFromFile("media/hit.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!ambiant2.loadFromFile("media/ambiant1.wav")) {
-		std::cerr << "unable to load audio media\n";
-		exit(1);
-	}
-	if (!ambiant1.loadFromFile("media/ambiant2.wav")) {
+	if (!rope.loadFromFile("media/rope.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
@@ -290,8 +285,7 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	soundBuffersTable.try_emplace("knock2", knock2);
 	soundBuffersTable.try_emplace("knock3", knock3);
 	soundBuffersTable.try_emplace("hit", hit);
-	soundBuffersTable.try_emplace("ambiant1", ambiant1);
-	soundBuffersTable.try_emplace("ambiant2", ambiant2);
+	soundBuffersTable.try_emplace("rope", rope);
 }
 
 

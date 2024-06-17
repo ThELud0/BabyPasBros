@@ -27,8 +27,7 @@ private:
     sf::Sound               mWalkSound2;
     sf::Sound               mWalkSound3;
     sf::Sound               mHitSound;
-    sf::Sound               mDragSound1;
-    sf::Sound               mDragSound2;
+    sf::Sound               mRopeSound;
     sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };

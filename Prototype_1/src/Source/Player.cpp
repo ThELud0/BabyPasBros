@@ -61,11 +61,8 @@ void Player::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::le
 		if (key == "hit"sv) {
 			mHitSound.setBuffer(value);
 		}
-		if (key == "drag1"sv) {
-			mDragSound1.setBuffer(value);
-		}
-		if (key == "drag2"sv) {
-			mDragSound2.setBuffer(value);
+		if (key == "rope"sv) {
+			mRopeSound.setBuffer(value);
 		}
 	}
 	///on ajuste le volume
@@ -74,8 +71,7 @@ void Player::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::le
 	mWalkSound2.setVolume(20);
 	mWalkSound3.setVolume(20);
 	mHitSound.setVolume(40);
-	mDragSound1.setVolume(20);
-	mDragSound2.setVolume(20);
+	mRopeSound.setVolume(20);
 }
 
 /// <summary>
@@ -296,6 +292,7 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 
 //tire le joueur vers la position d'un RoundTarget mourant (sans traverser les obstacles sur son chemin)
 void Player::dragTowards(sf::Vector2f targetPos) {
+	//mRopeSound.play();
 	dragging = true;
 	sf::Vector2f movement(0.f, 0.f);
 
@@ -314,7 +311,6 @@ void Player::dragTowards(sf::Vector2f targetPos) {
 	if ((targetPos.x > mChar.getPosition().x + static_cast<float>(width) * 2.f / 3.f) && (!collideRight)) {
 		movement.x += PlayerSpeed;
 	}
-	playDragSound();
 	dragMovement = movement;
 }
 
@@ -335,24 +331,6 @@ void Player::playWalkSound()  {
 		}
 		else {
 			mWalkSound3.play();
-		}
-	}
-}
-
-
-void Player::playDragSound() {
-	if (collideDown && (clock.getElapsedTime().asMilliseconds() > 350.f)) {
-		//random int from 0 to 1
-		static std::random_device rd;
-		static std::default_random_engine engine(rd());
-		std::uniform_int_distribution<> distribution(0, 1);
-		int drawnNumber = distribution(engine);
-
-		if (drawnNumber == 0) {
-			mDragSound1.play();
-		}
-		else {
-			mDragSound2.play();
 		}
 	}
 }
