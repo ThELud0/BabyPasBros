@@ -232,15 +232,15 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!harp.loadFromFile("media/door.wav")) {
+	if (!door.loadFromFile("media/door.wav")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!harp.loadFromFile("media/babydie.wav")) {
+	if (!babydie.loadFromFile("media/babydie.wav")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!harp.loadFromFile("media/jump.wav")) {
+	if (!jump.loadFromFile("media/jump.wav")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
