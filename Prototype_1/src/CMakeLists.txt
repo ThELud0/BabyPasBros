@@ -9,7 +9,7 @@ target_include_directories(lib_simpleGame
   Include
 )
 
-target_link_libraries(lib_simpleGame PUBLIC pugixml sfml-graphics)
+target_link_libraries(lib_simpleGame PUBLIC pugixml sfml-graphics sfml-audio)
 
 add_executable(simpleGame
   Source/Main.cpp
@@ -20,7 +20,7 @@ target_include_directories(simpleGame
   Include
 )
 
-target_link_libraries(simpleGame PUBLIC pugixml lib_simpleGame sfml-graphics)
+target_link_libraries(simpleGame PUBLIC pugixml lib_simpleGame sfml-graphics sfml-audio)
 
 # The following command is executed only when cmake is executed
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../media DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
