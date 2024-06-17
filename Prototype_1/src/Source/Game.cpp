@@ -246,9 +246,9 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	}
 
 	soundBuffersTable.try_emplace("harp", harp);
-	soundBuffersTable.try_emplace("harp", door);
-	soundBuffersTable.try_emplace("harp", babydie);
-	soundBuffersTable.try_emplace("harp", jump);
+	soundBuffersTable.try_emplace("door", door);
+	soundBuffersTable.try_emplace("babydie", babydie);
+	soundBuffersTable.try_emplace("jump", jump);
 }
 
 
