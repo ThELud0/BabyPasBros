@@ -27,6 +27,8 @@ private:
     sf::Sound               mWalkSound2;
     sf::Sound               mWalkSound3;
     sf::Sound               mHitSound;
+    sf::Sound               mDragSound1;
+    sf::Sound               mDragSound2;
     sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
@@ -38,5 +40,6 @@ private:
     bool                    collideLeft{ false };
     bool                    dragging{ false };
     void                    playWalkSound();
+    void                    playDragSound();
     sf::Clock               clock;
 };
