@@ -160,38 +160,38 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	sf::Texture openedDoor;
 	sf::Texture openDoorText;
 
-	if (!babyLeft.loadFromFile("media/babygoleft.png")) {
+	if (!babyLeft.loadFromFile("resources/babygoleft.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
 
-	if (!babyRight.loadFromFile("media/babygoright.png")) {
+	if (!babyRight.loadFromFile("resources/babygoright.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
 
-	if (!groundCloud.loadFromFile("media/nuage.png")) {
+	if (!groundCloud.loadFromFile("resources/nuage.png")) {
 		std::cout << "texture load failed\n";
 
 		exit(1);
 	}
-	if (!flippedCloud.loadFromFile("media/flipped_nuage.png")) {
+	if (!flippedCloud.loadFromFile("resources/flipped_nuage.png")) {
 		std::cout << "texture load failed\n";
 
 		exit(1);
 	}
 
-	if (!closedDoor.loadFromFile("media/closed_door.png")) {
+	if (!closedDoor.loadFromFile("resources/closed_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
 
-	if (!openedDoor.loadFromFile("media/opened_door.png")) {
+	if (!openedDoor.loadFromFile("resources/opened_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
 
-	if (!openDoorText.loadFromFile("media/open_door_text.png")) {
+	if (!openDoorText.loadFromFile("resources/open_door_text.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
@@ -220,7 +220,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::str
 	}
 
 	pugi::xml_document doc;
-	if (auto result = doc.load_file("media/monde1.xml"); !result)
+	if (auto result = doc.load_file("resources/monde1.xml"); !result)
 	{
 		std::cerr << "Could not open file monde1.xml because " << result.description() << std::endl;
 		exit(1);

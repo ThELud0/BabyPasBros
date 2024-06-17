@@ -36,6 +36,11 @@ else()
   FetchContent_MakeAvailable(sfml)
 endif()
 
+if(WIN32)
+   file(GLOB_RECURSE DYNAMIC_LIBS CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/lib_openal32/${ARCH}/*.dll)
+   file(COPY ${DYNAMIC_LIBS} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(src_original)

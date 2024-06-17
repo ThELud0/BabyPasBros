@@ -7,7 +7,7 @@ target_include_directories(simpleGameOriginal
   Include
 )
 
-target_link_libraries(simpleGameOriginal PUBLIC sfml-graphics)
+target_link_libraries(simpleGameOriginal PUBLIC sfml-graphics sfml-audio)
 
 # The following command is executed only when cmake is executed
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../media DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
