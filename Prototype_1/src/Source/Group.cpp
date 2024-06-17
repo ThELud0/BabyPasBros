@@ -48,6 +48,7 @@ void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& te
 /// </summary>
 /// <param name="soundBuffers"></param>
 void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
+	mainCharacter->setSoundBuffer(soundBuffers);
 	for (auto const& entity : children) {
 		entity->setSoundBuffer(soundBuffers);
 	}
