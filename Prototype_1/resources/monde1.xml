@@ -10,6 +10,7 @@
 			<Wall x="700" y="400" h="85" w="256" vertical="false"/>
 			<Wall x="1200" y="200" h="85" w="256" vertical="false"/>
 			<Wall x="470" y="0" h="130" w="512" vertical="false"/>
+			<Wall x="-42" y="0" h="130" w="512" vertical="false"/>
 
 		</Niveau>
 		
