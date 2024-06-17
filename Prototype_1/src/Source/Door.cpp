@@ -47,7 +47,7 @@ void Door::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less
 			mDoorSound.setBuffer(value);
 		}
 	}
-	mDoorSound.setVolume(10);
+	mDoorSound.setVolume(50);
 }
 
 sf::Vector2f Door::getPos() {

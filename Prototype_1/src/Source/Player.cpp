@@ -48,9 +48,25 @@ void Player::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::le
 		if (key == "jump"sv) {
 			mJumpSound.setBuffer(value);
 		}
+		if (key == "knock1"sv) {
+			mWalkSound1.setBuffer(value);
+		}
+		if (key == "knock2"sv) {
+			mWalkSound2.setBuffer(value);
+		}
+		if (key == "knock3"sv) {
+			mWalkSound3.setBuffer(value);
+		}
+		if (key == "hit"sv) {
+			mHitSound.setBuffer(value);
+		}
 	}
 	///on ajuste le volume
 	mJumpSound.setVolume(10);
+	mWalkSound1.setVolume(20);
+	mWalkSound2.setVolume(20);
+	mWalkSound3.setVolume(20);
+	mHitSound.setVolume(40);
 }
 
 /// <summary>
@@ -236,6 +252,7 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (yPlayer - 3 * PlayerSpeed * elapsedTime.asSeconds() <= yWall + heiWall - static_cast<float>(height) / 6)) 
 		{
 			collideUp = true;
+			mHitSound.play();
 			if (mIsMovingUp) {
 				acceleration = PlayerSpeed * 3 + 10;
 				

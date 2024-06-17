@@ -88,7 +88,7 @@ void Game::run()
 			harpsound.setBuffer(value);
 		}
 	}
-	harpsound.setVolume(10);
+	harpsound.setVolume(20);
 	harpsound.play();
 
 	while (mWindow.isOpen())
@@ -227,6 +227,10 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	sf::SoundBuffer door;
 	sf::SoundBuffer babydie;
 	sf::SoundBuffer jump;
+	sf::SoundBuffer knock1;
+	sf::SoundBuffer knock2;
+	sf::SoundBuffer knock3;
+	sf::SoundBuffer hit;
 
 	if (!harp.loadFromFile("media/harp.wav")) {
 		std::cerr << "unable to load audio media\n";
@@ -244,11 +248,31 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
+	if (!knock1.loadFromFile("media/knock1.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!knock2.loadFromFile("media/knock2.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!knock3.loadFromFile("media/knock3.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!hit.loadFromFile("media/hit.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
 
 	soundBuffersTable.try_emplace("harp", harp);
 	soundBuffersTable.try_emplace("door", door);
 	soundBuffersTable.try_emplace("babydie", babydie);
 	soundBuffersTable.try_emplace("jump", jump);
+	soundBuffersTable.try_emplace("knock1", knock1);
+	soundBuffersTable.try_emplace("knock2", knock2);
+	soundBuffersTable.try_emplace("knock3", knock3);
+	soundBuffersTable.try_emplace("hit", hit);
 }
 
 

@@ -23,6 +23,10 @@ private:
     float                   maxGravity;
     sf::Sprite			    mChar;
     sf::Sound               mJumpSound;
+    sf::Sound               mWalkSound1;
+    sf::Sound               mWalkSound2;
+    sf::Sound               mWalkSound3;
+    sf::Sound               mHitSound;
     sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
