@@ -224,13 +224,31 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 /// <param name="soundBuffersTable"></param>
 void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffersTable) const {
 	sf::SoundBuffer harp;
+	sf::SoundBuffer door;
+	sf::SoundBuffer babydie;
+	sf::SoundBuffer jump;
 
 	if (!harp.loadFromFile("media/harp.wav")) {
-		std::cout << "unable to load audio media\n";
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!harp.loadFromFile("media/door.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!harp.loadFromFile("media/babydie.wav")) {
+		std::cerr << "unable to load audio media\n";
+		exit(1);
+	}
+	if (!harp.loadFromFile("media/jump.wav")) {
+		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
 
 	soundBuffersTable.try_emplace("harp", harp);
+	soundBuffersTable.try_emplace("harp", door);
+	soundBuffersTable.try_emplace("harp", babydie);
+	soundBuffersTable.try_emplace("harp", jump);
 }
 
 
