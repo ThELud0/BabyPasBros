@@ -52,7 +52,7 @@ float invertOrNot(int x) {
 
 Game::Game()
 {
-	mFont.loadFromFile("media/Sansation.ttf");
+	mFont.loadFromFile("resources/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setFillColor(sf::Color::Black);
 	
@@ -66,7 +66,7 @@ void Game::run()
 	
 	//Initialise le fond d'écran de début de jeu
 	sf::Texture levelStart;
-	if (!levelStart.loadFromFile("media/sleeping_baby_art.jpg")) {
+	if (!levelStart.loadFromFile("resources/sleeping_baby_art.jpg")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
@@ -92,7 +92,7 @@ void Game::run()
 	harpsound.play();
 
 	sf::Music lullaby;
-	if (!lullaby.openFromFile("media/lullaby.mp3"))
+	if (!lullaby.openFromFile("resources/lullaby.mp3"))
 		std::cerr << "unable to load music\n";
 	lullaby.setLoop(true);
 	lullaby.setVolume(20);
@@ -240,39 +240,39 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	sf::SoundBuffer hit;
 	sf::SoundBuffer rope;
 
-	if (!harp.loadFromFile("media/harp.mp3")) {
+	if (!harp.loadFromFile("resources/harp.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!door.loadFromFile("media/door.mp3")) {
+	if (!door.loadFromFile("resources/door.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!babydie.loadFromFile("media/babydie.mp3")) {
+	if (!babydie.loadFromFile("resources/babydie.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!jump.loadFromFile("media/jump.mp3")) {
+	if (!jump.loadFromFile("resources/jump.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock1.loadFromFile("media/knock1.mp3")) {
+	if (!knock1.loadFromFile("resources/knock1.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock2.loadFromFile("media/knock2.mp3")) {
+	if (!knock2.loadFromFile("resources/knock2.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!knock3.loadFromFile("media/knock3.mp3")) {
+	if (!knock3.loadFromFile("resources/knock3.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!hit.loadFromFile("media/hit.mp3")) {
+	if (!hit.loadFromFile("resources/hit.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
-	if (!rope.loadFromFile("media/rope.mp3")) {
+	if (!rope.loadFromFile("resources/rope.mp3")) {
 		std::cerr << "unable to load audio media\n";
 		exit(1);
 	}
