@@ -22,5 +22,17 @@ target_include_directories(simpleGame
 
 target_link_libraries(simpleGame PUBLIC pugixml lib_simpleGame sfml-graphics sfml-audio)
 
+add_custom_target(copy-resources ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/resources)
+file(GLOB RESOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/resources/*.*)
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources
+                   DEPENDS ${CMAKE_SOURCE_DIR}/resources
+                   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/resources
+                   COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                           ${RESOURCES}
+                           ${CMAKE_CURRENT_BINARY_DIR}/resources)
+add_dependencies(simpleGame copy-resources)
+
+
+
 # The following command is executed only when cmake is executed
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../media DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+# file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR
