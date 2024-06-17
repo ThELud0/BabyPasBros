@@ -39,8 +39,18 @@ void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& te
 	mainCharacter->setTexture(textures);
 	for (auto const& entity : children) {
 		entity->setTexture(textures);
+	}	
+}
+
+/// <summary>
+/// Les objets du groupe prennent chacun leur soundBuffer parmi ceux disponibles, 
+/// stockées dans la table soundBuffers.
+/// </summary>
+/// <param name="soundBuffers"></param>
+void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
+	for (auto const& entity : children) {
+		entity->setSoundBuffer(soundBuffers);
 	}
-	
 }
 
 /// <summary>

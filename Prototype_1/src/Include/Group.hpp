@@ -9,6 +9,7 @@ public:
 	explicit		Group(const pugi::xml_node& node);
 
 	void			setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) override;
+	void            setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) override;
 	void			drawCurrent(sf::RenderWindow& window) const override;
 	void			update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) override;
 	void			handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override ;

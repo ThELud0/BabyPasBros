@@ -278,7 +278,9 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::str
 	{
 		std::cout << child.name() << "\n";
 		auto grp = std::make_unique<Group>(child);
-		grp->setTexture(texturesTable);
+		//grp->setTexture(texturesTable);
+		grp->setTexture(textures);
+		grp->setSoundBuffer(soundBuffers);
 		levelsTable.push_back(std::move(grp));
 	}
 

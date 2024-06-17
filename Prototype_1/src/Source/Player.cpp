@@ -37,6 +37,22 @@ void Player::setTexture(std::map<std::string, const sf::Texture, std::less<>> &t
 	mChar.setTextureRect(sf::IntRect(0, 0, width, height));
 }
 
+
+/// <summary>
+/// Permet de charger les sons initiaux du joueur lors de son apparition.
+/// </summary>
+/// <param name="soundBuffers"></param>
+void Player::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
+	///on parcourt la map des buffer audio
+	for (auto const& [key, value] : soundBuffers) {
+		if (key == "jump"sv) {
+			mJumpSound.setBuffer(value);
+		}
+	}
+	///on ajuste le volume
+	mJumpSound.setVolume(10);
+}
+
 /// <summary>
 /// dessine le joueur
 /// </summary>
@@ -55,6 +71,7 @@ void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPress
 	///Un saut n'est possible que si le joueur touche le sol (collideDown)
 	if ((key == sf::Keyboard::Z) && collideDown) {
 		mIsMovingUp = true;
+		mJumpSound.play();
 	}
 	else if (key == sf::Keyboard::S)
 		mIsMovingDown = isPressed;

@@ -39,8 +39,15 @@ void Door::setTexture(std::map<std::string, const sf::Texture, std::less<>>& tex
 			doorText.setTexture(&value);
 		}
 	}
+}
 
-	
+void Door::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
+	for (auto const& [key, value] : soundBuffers) {
+		if (key == "door"sv) {
+			mDoorSound.setBuffer(value);
+		}
+	}
+	mDoorSound.setVolume(10);
 }
 
 sf::Vector2f Door::getPos() {
@@ -134,5 +141,6 @@ void Door::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed
 	//si le joueur est proche et qu'il a cliqué sur la touche indiquée, la porte s'ouvre
 	if ((key == sf::Keyboard::E)&&physical&&isNear&&isPressed){
 		physical = false;
+		mDoorSound.play();
 	}
 }

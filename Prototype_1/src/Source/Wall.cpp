@@ -28,6 +28,10 @@ void Wall::setTexture(std::map<std::string, const sf::Texture, std::less<>>& tex
 	}
 }
 
+void Wall::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
+}
+
+
 sf::Vector2f Wall::getPos() {
 	return wShape.getPosition();
 }

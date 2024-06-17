@@ -6,7 +6,8 @@ class Player : public Entity {
 public:
     explicit Player(float x, float y, int height, int width);
     explicit Player(const pugi::xml_node& node);
-    void                    setTexture(std::map<std::string, const sf::Texture, std::less<>> &textures) override;
+    void                    setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) override;
+    void                    setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) override;
     void					drawCurrent(sf::RenderWindow& window) const override;
     void					handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override;
     void					update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& babyTextures) override;
@@ -21,6 +22,7 @@ private:
     float                   acceleration = 0.f;
     float                   maxGravity;
     sf::Sprite			    mChar;
+    sf::Sound               mJumpSound;
     sf::Vector2f            dragMovement{ 0.f, 0.f };
     bool					mIsMovingUp{ false };
     bool					mIsMovingDown{ false };
