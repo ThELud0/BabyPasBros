@@ -37,4 +37,6 @@ private:
     bool                    collideRight{ false };
     bool                    collideLeft{ false };
     bool                    dragging{ false };
+    void                    playWalkSound();
+    sf::Clock               clock;
 };

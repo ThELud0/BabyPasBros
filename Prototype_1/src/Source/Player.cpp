@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include <random>
 using namespace std::literals;
 
 
@@ -136,9 +137,11 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 
 	if (mIsMovingLeft && (!collideLeft)) {
 		movement.x -= PlayerSpeed;
+		playWalkSound();
 	}
 	if (mIsMovingRight && (!collideRight)) {
 		movement.x += PlayerSpeed;
+		playWalkSound();
 	}
 
 	//on "override" les instructions provenant du clavier pour harponner le joueur vers un RoundTarget si un a été cliqué
@@ -305,4 +308,25 @@ void Player::dragTowards(sf::Vector2f targetPos) {
 	}
 
 	dragMovement = movement;
+}
+
+
+void Player::playWalkSound()  {
+	if (collideDown && (clock.getElapsedTime().asMilliseconds() > 350.f)) {
+		clock.restart();
+		//random int from 0 to 2
+		static std::random_device rd;
+		static std::default_random_engine engine(rd());
+		std::uniform_int_distribution<> distribution(0, 2);
+		int drawnNumber = distribution(engine);
+		if (drawnNumber == 0) {
+			mWalkSound1.play();
+		}
+		else if (drawnNumber == 1) {
+			mWalkSound2.play();
+		}
+		else {
+			mWalkSound3.play();
+		}
+	}
 }
