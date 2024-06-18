@@ -106,7 +106,7 @@ void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPress
 /// <param name="elapsedTime"></param>
 /// <param name="view"></param>
 /// <param name="babyTextures"></param>
-void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string,const sf::Texture, std::less<>>& babyTextures) {
+void Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string,const sf::Texture, std::less<>>& babyTextures) {
 	sf::Vector2f movement(0.f, 0.f);
 	std::string key("");
 
@@ -193,7 +193,6 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 			view.move(0.f, mChar.getPosition().y - view.getCenter().y);
 		}
 	}
-
 	///on remet les informations de collision et drag à false, les autres fonctions les remettront à
 	///true si nécéssaire pour le traitement du prochain update.
 	collideUp = false;
@@ -268,11 +267,8 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			mHitSound.play();
 			if (mIsMovingUp) {
 				acceleration = PlayerSpeed * 3 + 10;
-				
 			}
-
 		}
-
 		//joueur à gauche du mur
 		if ((xPlayer < xWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + static_cast<float>(height) > yWall + static_cast<float>(height) / 4)
 			///idem que pour le haut et bas, sauf qu'on ne laisse pas le joueur s'enfoncer dans les cotés verticaux d'un mur.
@@ -280,8 +276,6 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (xPlayer + static_cast<float>(width) + PlayerSpeed * elapsedTime.asSeconds() >= xWall)) 
 		{
 			collideRight = true;
-
-				
 		}
 		//joueur à droite du mur
 		if ((xPlayer + static_cast<float>(width) > xWall + widWall) && (yPlayer < yWall + heiWall - static_cast<float>(height) / 6) && (yPlayer + static_cast<float>(height) > yWall + static_cast<float>(height) / 4)
@@ -289,11 +283,8 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 			&& (xPlayer - PlayerSpeed * elapsedTime.asSeconds() <= xWall + widWall)) 
 		{
 			collideLeft = true;
-
-			
 		}
 	}
-
 }
 
 //tire le joueur vers la position d'un RoundTarget mourant (sans traverser les obstacles sur son chemin)
