@@ -88,7 +88,7 @@ sf::Vector2f Door::getSiz() {
 }
 
 /// <summary>
-/// retourne true si la porte est verticale, false sino
+/// retourne true si la porte est verticale, false sinon
 /// </summary>
 /// <returns></returns>
 bool Door::isVertical() const {
