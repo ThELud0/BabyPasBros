@@ -27,5 +27,4 @@ public:
 	int						height;
 	int						width;
 	bool					physical{ true };
-
 };
