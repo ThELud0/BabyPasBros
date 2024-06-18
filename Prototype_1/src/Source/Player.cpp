@@ -12,6 +12,7 @@ using namespace std::literals;
 Player::Player(float x, float y, int height, int width) : Entity{ x, y, height, width } {
 	mChar.setPosition(x, y);
 }
+
 /// <summary>
 /// Initialise le jour à une position (x,y) avec une taille (width,height),
 /// ces paramètres étant récupérés à partir d'un node xml.
@@ -36,7 +37,6 @@ void Player::setTexture(std::map<std::string, const sf::Texture, std::less<>> &t
 	///on ajuste la taille de la texture récupérée aux valeurs (width,height) avec lesquelles le jouer a été initialisé
 	mChar.setTextureRect(sf::IntRect(0, 0, width, height));
 }
-
 
 /// <summary>
 /// Permet de charger les sons initiaux du joueur lors de son apparition.
@@ -89,7 +89,7 @@ void Player::drawCurrent(sf::RenderWindow& window) const {
 void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
  
 	///Un saut n'est possible que si le joueur touche le sol (collideDown)
-	if ((key == sf::Keyboard::Z) && collideDown) {
+	if (((key == sf::Keyboard::Z) || (key == sf::Keyboard::Space)) && collideDown) {
 		mIsMovingUp = true;
 		mJumpSound.play();
 	}
@@ -99,7 +99,6 @@ void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPress
 		mIsMovingLeft = isPressed;
 	else if (key == sf::Keyboard::D)
 		mIsMovingRight = isPressed;
-
 }
 
 /// <summary>
@@ -131,7 +130,6 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 		/// lorsqu'il est en l'air, limité au maximum de la gravité
 		if (mIsMovingDown && (acceleration + 50.f < maxGravity))
 			acceleration += 50.f;
-		
 	}
 	
 	///si un saut a été enclenché et qu'il n'y a pas d'obstacle en hauteur, le personnage saute.
@@ -213,6 +211,7 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 sf::Sprite Player::getSelf() const{
 	return mChar;
 }
+
 /// <summary>
 /// retourne la position (x,y) du sprite du joueur
 /// </summary>
@@ -220,6 +219,7 @@ sf::Sprite Player::getSelf() const{
 sf::Vector2f Player::getPos() {
 	return mChar.getPosition();
 }
+
 /// <summary>
 /// retourne la taille (width,height) du sprite du joueur
 /// </summary>
@@ -299,7 +299,7 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 
 //tire le joueur vers la position d'un RoundTarget mourant (sans traverser les obstacles sur son chemin)
 void Player::dragTowards(sf::Vector2f targetPos) {
-	//mRopeSound.play();
+	mRopeSound.play();
 	dragging = true;
 	sf::Vector2f movement(0.f, 0.f);
 
@@ -321,7 +321,9 @@ void Player::dragTowards(sf::Vector2f targetPos) {
 	dragMovement = movement;
 }
 
-
+/// <summary>
+/// Joue un son de pas aléatoirement, en attendant que le son précédent soit terminé
+/// </summary>
 void Player::playWalkSound()  {
 	if (collideDown && (clock.getElapsedTime().asMilliseconds() > 350.f)) {
 		clock.restart();

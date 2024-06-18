@@ -39,6 +39,5 @@ private:
     bool                    collideLeft{ false };
     bool                    dragging{ false };
     void                    playWalkSound();
-    void                    playDragSound();
     sf::Clock               clock;
 };
