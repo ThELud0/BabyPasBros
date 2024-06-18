@@ -16,11 +16,11 @@ public:
 	void			handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override;
 
 	bool			passLevel() const;
+
 private:
 	sf::RectangleShape	wShape;
 	sf::Sound			mPacifierSound;
 	bool				isNear{ false };
 	bool				nextLevel{ false };
 	sf::RectangleShape	pacifierText;
-
 };
