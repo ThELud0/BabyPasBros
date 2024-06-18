@@ -19,7 +19,7 @@ class Game : private sf::NonCopyable
 		void					processEvents();
 		void					update(sf::Time elapsedTime);
 		void					render();
-		void					initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::string, const sf::Texture, std::less<>> &texturesTable, std::vector<std::unique_ptr<Group>> &levelsTable);
+		void					initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::unique_ptr<Group>> &levelsTable);
 		void					initTextures(std::map<std::string, const sf::Texture, std::less<>>& texturesTable) const;
 		void					initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffersTable) const;
 		void					updateStatistics(sf::Time elapsedTime);

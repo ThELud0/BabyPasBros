@@ -78,7 +78,7 @@ void Game::run()
 	//Initialise les autres éléments du jeu (textures, joueur, murs...)
 	initTextures(textures);
 	initSoundBuffers(soundBuffers);
-	initialize(mTargets, textures,levels);
+	initialize(mTargets,levels);
 
 
 	// load harp sound from buffer table
@@ -138,8 +138,14 @@ void Game::processEvents()
 					}
 					mWindow.setView(mWindow.getDefaultView());
 				}
-				// Passe au niveau suivant si clique droit, à changer pour que le passage de niveau soit déclenché par un autre évènement du jeu...
-				else if (event.mouseButton.button == sf::Mouse::Right) {
+				
+				
+
+			case sf::Event::KeyPressed :
+				levels[curLevel]->handlePlayerInput(event.key.code, true);
+				
+				//si le joueur se trouve sur la tétine du niveau actuel et qu'il en donne l'indication, on passe au niveau suivant!
+				if (levels[curLevel]->nextLevel()) {
 					++curLevel;
 					levels[curLevel]->setTexture(textures);
 					levels[curLevel]->drawCurrent(mWindow);
@@ -147,10 +153,6 @@ void Game::processEvents()
 					altView.setCenter(sf::Vector2f(235.f, 1288.f));
 					altView.setSize(sf::Vector2f(5270.f, 4176.f));
 				}
-				break;
-
-			case sf::Event::KeyPressed :
-				levels[curLevel]->handlePlayerInput(event.key.code, true);
 				break;
 			case sf::Event::KeyReleased :
 				levels[curLevel]->handlePlayerInput(event.key.code, false);
@@ -177,6 +179,8 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	sf::Texture closedDoor;
 	sf::Texture openedDoor;
 	sf::Texture openDoorText;
+	sf::Texture babyPacifier;
+	sf::Texture pacifierText;
 
 	if (!babyLeft.loadFromFile("resources/babygoleft.png")) {
 		std::cout << "texture load failed\n";
@@ -214,6 +218,16 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 		exit(1);
 	}
 
+	if (!babyPacifier.loadFromFile("resources/baby_pacifier.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
+	if (!pacifierText.loadFromFile("resources/pacifier_text.png")) {
+		std::cout << "texture load failed\n";
+		exit(1);
+	}
+
 	texturesTable.try_emplace("babyleft", babyLeft);
 	texturesTable.try_emplace("babyright", babyRight);
 	texturesTable.try_emplace("groundCloud", groundCloud);
@@ -221,7 +235,8 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	texturesTable.try_emplace("closedDoor", closedDoor);
 	texturesTable.try_emplace("openedDoor", openedDoor);
 	texturesTable.try_emplace("openDoorText", openDoorText);
-
+	texturesTable.try_emplace("babyPacifier", babyPacifier);
+	texturesTable.try_emplace("pacifierText", pacifierText);
 }
 
 /// <summary>
@@ -289,7 +304,7 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 }
 
 
-void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::string, const sf::Texture, std::less<>> &texturesTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
+void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
 	//initialise les RoundTargets
 	for (int i = 0;i < nbCercles;++i) {
 		int radius = rando(10, 50);
@@ -313,9 +328,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::map<std::str
 	//à un vecteur de niveaux.
 	for (auto const& child : doc.child("Monde"))
 	{
-		std::cout << child.name() << "\n";
 		auto grp = std::make_unique<Group>(child);
-		//grp->setTexture(texturesTable);
 		grp->setTexture(textures);
 		grp->setSoundBuffer(soundBuffers);
 		levelsTable.push_back(std::move(grp));

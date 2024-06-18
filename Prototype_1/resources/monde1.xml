@@ -2,21 +2,24 @@
 	<Monde>
 		<Niveau label="M1_Niveau1">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->     
-			<Player x="400" y="300" h="106" w="144"/>
+			<Player x="200" y="300" h="106" w="144"/>
+			<Pacifier x="-42" y="-196" h="196" w="184"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
 			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
-			<Door x="100" y="400" h="332" w="152" vertical="true"/>
+			<Door x="550" y="400" h="332" w="152" vertical="true"/>
 			<Wall x="1200" y="600" h="85" w="256" vertical="false"/>
 			<Wall x="700" y="400" h="85" w="256" vertical="false"/>
 			<Wall x="1200" y="200" h="85" w="256" vertical="false"/>
 			<Wall x="470" y="0" h="130" w="512" vertical="false"/>
 			<Wall x="-42" y="0" h="130" w="512" vertical="false"/>
+			
 
 		</Niveau>
 		
 		<Niveau label="M1_Niveau2">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->
 			<Player x="400" y="300" h="106" w="144"/>
+			<Pacifier x="-42" y="-196" h="196" w="184"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
 			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
 			<Door x="600" y="400" h="332" w="152" vertical="true"/>

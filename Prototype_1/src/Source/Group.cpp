@@ -24,6 +24,10 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 			auto s = std::make_unique<Door>(child);
 			children.push_back(std::move(s));
 		}
+
+		else if (child.name() == "Pacifier"sv) {
+			pacifier = std::make_unique<Pacifier>(child);
+		}
 		
 	}
 }
@@ -37,6 +41,8 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 /// <param name="textures"></param>
 void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->setTexture(textures);
+	pacifier->setTexture(textures);
+
 	for (auto const& entity : children) {
 		entity->setTexture(textures);
 	}	
@@ -49,6 +55,8 @@ void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& te
 /// <param name="soundBuffers"></param>
 void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
 	mainCharacter->setSoundBuffer(soundBuffers);
+	pacifier->setSoundBuffer(soundBuffers);
+
 	for (auto const& entity : children) {
 		entity->setSoundBuffer(soundBuffers);
 	}
@@ -62,6 +70,7 @@ void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::les
 /// <param name="textures"></param>
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
+	pacifier->update(elapsedTime, view, textures);
 	for (auto const& entity : children) {
 		entity->update(elapsedTime, view, textures);
 	}
@@ -77,6 +86,7 @@ void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::st
 void Group::collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) {
 	for (auto const& entity : children) {
 		mainCharacter->collide(entity->getPos(), entity->getSiz(), elapsedTime, entity->getPhysicalState());
+		pacifier->collide(mcPos, mcSize, elapsedTime, physical);
 		entity->collide(mcPos, mcSize, elapsedTime, physical);
 	}
 }
@@ -89,6 +99,7 @@ void Group::drawCurrent(sf::RenderWindow& window) const {
 	for (auto const& entity : children) {
 		entity->drawCurrent(window);
 	}
+	pacifier->drawCurrent(window);
 	mainCharacter->drawCurrent(window);
 }
 
@@ -108,6 +119,10 @@ sf::Vector2f Group::getSiz() {
 	return mainCharacter->getSiz();
 }
 
+bool Group::nextLevel() const {
+	return pacifier->passLevel();
+}
+
 /// <summary>
 /// Transmet les événement aux éléments individuels du groupe pour traitement.
 /// </summary>
@@ -115,6 +130,7 @@ sf::Vector2f Group::getSiz() {
 /// <param name="isPressed"></param>
 void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
 	mainCharacter->handlePlayerInput(key, isPressed);
+	pacifier->handlePlayerInput(key, isPressed);
 	for (auto const& entity : children) {
 		entity->handlePlayerInput(key,isPressed);
 	}
