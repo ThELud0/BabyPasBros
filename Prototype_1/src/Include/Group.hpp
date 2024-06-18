@@ -1,6 +1,5 @@
 #include "Entity.hpp"
 #include "Player.hpp"
-#include "Enemy.hpp"
 #include "Wall.hpp"
 #include "Door.hpp"
 #include "Pacifier.hpp"
@@ -26,4 +25,5 @@ private:
 	std::vector<std::unique_ptr<Entity>>	children;
 	std::unique_ptr<Player>					mainCharacter;
 	std::unique_ptr<Pacifier>				pacifier;
+
 };

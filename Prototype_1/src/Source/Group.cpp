@@ -28,13 +28,6 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 		else if (child.name() == "Pacifier"sv) {
 			pacifier = std::make_unique<Pacifier>(child);
 		}
-
-		else if (child.name() == "Enemy"sv) {
-			auto s = Enemy(child);
-			//auto s = std::make_unique<Enemy>(child);
-			//auto s = std::make_unique<Enemy>(child);
-			//children.push_back(std::move(s));
-		}
 		
 	}
 }
@@ -77,9 +70,6 @@ void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::les
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->update(elapsedTime, view, textures);
 	pacifier->update(elapsedTime, view, textures);
-	//for (auto enemy : enemies) {
-	//	enemy->update(elapsedTime, view, textures);
-	//}
 	for (auto const& entity : children) {
 		entity->update(elapsedTime, view, textures);
 	}

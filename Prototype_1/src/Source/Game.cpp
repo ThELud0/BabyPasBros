@@ -181,7 +181,6 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	sf::Texture openDoorText;
 	sf::Texture babyPacifier;
 	sf::Texture pacifierText;
-	sf::Texture enemy;
 
 	if (!babyLeft.loadFromFile("resources/babygoleft.png")) {
 		std::cout << "texture load failed\n";
@@ -229,11 +228,6 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 		exit(1);
 	}
 
-	if (!enemy.loadFromFile("resources/enemy.png")) {
-		std::cout << "texture load failed\n";
-		exit(1);
-	}
-
 	texturesTable.try_emplace("babyleft", babyLeft);
 	texturesTable.try_emplace("babyright", babyRight);
 	texturesTable.try_emplace("groundCloud", groundCloud);
@@ -243,7 +237,6 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 	texturesTable.try_emplace("openDoorText", openDoorText);
 	texturesTable.try_emplace("babyPacifier", babyPacifier);
 	texturesTable.try_emplace("pacifierText", pacifierText);
-	texturesTable.try_emplace("enemy", enemy);
 }
 
 /// <summary>
