@@ -300,7 +300,7 @@ void Player::collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time
 
 //tire le joueur vers la position d'un RoundTarget mourant (sans traverser les obstacles sur son chemin)
 void Player::dragTowards(sf::Vector2f targetPos) {
-	//mRopeSound.play();
+	mRopeSound.play();
 	dragging = true;
 	sf::Vector2f movement(0.f, 0.f);
 
