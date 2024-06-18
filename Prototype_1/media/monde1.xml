@@ -3,6 +3,8 @@
 		<Niveau label="M1_Niveau1">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->     
 			<Player x="400" y="300" h="106" w="144"/>
+			<Enemy x="1000" y="300" h="106" w="144"/>
+			
 			<Wall x="0" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="100" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="200" y="700" h="100" w="100" vertical="false"/>

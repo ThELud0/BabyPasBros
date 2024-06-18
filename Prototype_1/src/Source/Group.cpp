@@ -13,18 +13,16 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 	for (auto const& child : node.children()) {
 		if (child.name() == "Player"sv) {
 			mainCharacter = std::make_unique<Player>(child);
-		}
-		
-		else if (child.name() == "Wall"sv) {
+		} else if (child.name() == "Wall"sv) {
 			auto s = std::make_unique<Wall>(child);
 			children.push_back(std::move(s));
-		}
-
-		else if (child.name() == "Door"sv) {
+		} else if (child.name() == "Door"sv) {
 			auto s = std::make_unique<Door>(child);
 			children.push_back(std::move(s));
+		} else if (child.name() == "Enemy"sv) {
+			auto s = std::make_unique<Enemy>(child);
+			children.push_back(std::move(s));
 		}
-		
 	}
 }
 
