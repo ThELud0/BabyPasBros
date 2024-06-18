@@ -70,13 +70,7 @@ void Game::run()
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-	sf::Texture bgTexture;
-	if (!bgTexture.loadFromFile("resources/background.jpg")) {
-		std::cout << "texture load failed\n";
-		exit(1);
-	}
 	levelStartScreen.setTexture(&levelStart);
-	bgShape.setTexture(&bgTexture);
 	//attention, modifier les valeurs ci-dessous peut casser l'animation de départ... code à améliorer si temps libre
 	levelStartScreen.setSize(sf::Vector2f(5269.f, 4176.f));
 	levelStartScreen.setPosition(-2400.f,-800.f);
@@ -192,12 +186,15 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!babyRight.loadFromFile("resources/babygoright.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!groundCloud.loadFromFile("resources/nuage.png")) {
 		std::cout << "texture load failed\n";
+
 		exit(1);
 	}
 	if (!flippedCloud.loadFromFile("resources/flipped_nuage.png")) {
@@ -205,22 +202,27 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 
 		exit(1);
 	}
+
 	if (!closedDoor.loadFromFile("resources/closed_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!openedDoor.loadFromFile("resources/opened_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!openDoorText.loadFromFile("resources/open_door_text.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!babyPacifier.loadFromFile("resources/baby_pacifier.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
+
 	if (!pacifierText.loadFromFile("resources/pacifier_text.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
@@ -303,7 +305,6 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 
 
 void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
-
 	//initialise les RoundTargets
 	for (int i = 0;i < nbCercles;++i) {
 		int radius = rando(10, 50);
@@ -343,7 +344,7 @@ void Game::update(sf::Time elapsedTime)
 
 	///animation qui zoom vers la "vraie fenêtre" de jeu au début et à chaque changement de niveau
 	if (loadingTime <= 0) {
-		mWindow.draw(bgShape);
+		
 		if (altView.getSize().x > 1024) {
 			//on réduit la longueur de la vue
 			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);

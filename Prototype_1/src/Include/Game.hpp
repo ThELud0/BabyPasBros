@@ -49,7 +49,6 @@ class Game : private sf::NonCopyable
 		sf::Text								mStatisticsText;
 		sf::Time								mStatisticsUpdateTime;
 		std::size_t								mStatisticsNumFrames{0};
-		sf::RectangleShape						bgShape;
 };
 
 #endif // BOOK_GAME_HPP
