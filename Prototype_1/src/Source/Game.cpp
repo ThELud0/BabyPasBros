@@ -4,12 +4,14 @@
 #include <iostream>
 #include <vector>
 
-
-
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
-
-//random int from nbMin to nbMax
+/// <summary>
+/// Génère un nombre aléatoire dans l'intervalle donné
+/// </summary>
+/// <param name="nbMin"></param>
+/// <param name="nbMax"></param>
+/// <returns></returns>
 int rando(int const nbMin, int const nbMax)
 {
 	static std::random_device rd;
@@ -18,7 +20,10 @@ int rando(int const nbMin, int const nbMax)
 	return distribution(engine);
 }
 
-
+/// <summary>
+/// Génère une couleur aléatoire
+/// </summary>
+/// <returns></returns>
 sf::Color couleurAleatoire() {
 	int choix = rando(0,4);
 	switch (choix) {
@@ -38,6 +43,11 @@ sf::Color couleurAleatoire() {
 	}
 }
 
+/// <summary>
+/// Change aléatoirement le signe d'un nombre
+/// </summary>
+/// <param name="x"></param>
+/// <returns></returns>
 float invertOrNot(int x) {
 	int choix = rando(0,1);
 	if (choix == 0) {
@@ -48,18 +58,22 @@ float invertOrNot(int x) {
 	}
 }
 
-
-
+/// <summary>
+/// Initialise le jeu
+/// </summary>
 Game::Game()
 {
 	mFont.loadFromFile("resources/Sansation.ttf");
 	mStatisticsText.setFont(mFont);
 	mStatisticsText.setFillColor(sf::Color::Black);
-	
 }
 
+/// <summary>
+/// Lance le jeu
+/// </summary>
 void Game::run()
 {
+	//Initialise l'horloge du jeu
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	mWindow.setVerticalSyncEnabled(true);
@@ -80,8 +94,7 @@ void Game::run()
 	initSoundBuffers(soundBuffers);
 	initialize(mTargets,levels);
 
-
-	// load harp sound from buffer table
+	//charge le son de départ depuis la table des sons
 	sf::Sound harpsound;
 	for (auto const& [keyName, value] : soundBuffers) {
 		if (keyName == "harp") {
@@ -91,6 +104,7 @@ void Game::run()
 	harpsound.setVolume(20);
 	harpsound.play();
 
+	//charge et joue la musique de fond
 	sf::Music lullaby;
 	if (!lullaby.openFromFile("resources/lullaby.mp3"))
 		std::cerr << "unable to load music\n";
@@ -98,6 +112,7 @@ void Game::run()
 	lullaby.setVolume(20);
 	lullaby.play();
 
+	//boucle de jeu
 	while (mWindow.isOpen())
 	{
 		sf::Time elapsedTime = clock.restart();
@@ -108,13 +123,14 @@ void Game::run()
 			processEvents();
 			update(TimePerFrame);
 		}
-
 		updateStatistics(elapsedTime);
 		render();
 	}
 }
 
-
+/// <summary>
+/// Gère les évènements du joueur
+/// </summary>
 void Game::processEvents()
 {
     sf::Event event{sf::Event::Count}; // Initialization to an impossible value (in order to suppress Clang-Tidy warning)
@@ -122,10 +138,11 @@ void Game::processEvents()
 	{
 		switch (event.type)
 		{
-			case sf::Event::Closed:
+			case sf::Event::Closed: // fermer la fenetre
 				mWindow.close();
 				break;
-			case sf::Event::MouseButtonPressed:
+
+			case sf::Event::MouseButtonPressed:	// click (sur une cible)
 				// Tue les RoundTargets, et au passage harponne le personnage vers le RoundTarget cliqué
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
@@ -138,11 +155,9 @@ void Game::processEvents()
 					}
 					mWindow.setView(mWindow.getDefaultView());
 				}
-				
-				
 
-			case sf::Event::KeyPressed :
-				levels[curLevel]->handlePlayerInput(event.key.code, true);
+			case sf::Event::KeyPressed:	//appuie sur une touche du clavier
+				levels[curLevel]->handlePlayerInput(event.key.code, true); // on redistribue aux éléments qui composent le niveau
 				
 				//si le joueur se trouve sur la tétine du niveau actuel et qu'il en donne l'indication, on passe au niveau suivant!
 				if (levels[curLevel]->nextLevel()) {
@@ -154,7 +169,8 @@ void Game::processEvents()
 					altView.setSize(sf::Vector2f(5270.f, 4176.f));
 				}
 				break;
-			case sf::Event::KeyReleased :
+
+			case sf::Event::KeyReleased: //relachement d'une touche
 				levels[curLevel]->handlePlayerInput(event.key.code, false);
 				break;
 
@@ -186,48 +202,38 @@ void Game::initTextures(std::map<std::string, const sf::Texture, std::less<>> &t
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!babyRight.loadFromFile("resources/babygoright.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!groundCloud.loadFromFile("resources/nuage.png")) {
 		std::cout << "texture load failed\n";
-
 		exit(1);
 	}
 	if (!flippedCloud.loadFromFile("resources/flipped_nuage.png")) {
 		std::cout << "texture load failed\n";
-
 		exit(1);
 	}
-
 	if (!closedDoor.loadFromFile("resources/closed_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!openedDoor.loadFromFile("resources/opened_door.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!openDoorText.loadFromFile("resources/open_door_text.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!babyPacifier.loadFromFile("resources/baby_pacifier.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	if (!pacifierText.loadFromFile("resources/pacifier_text.png")) {
 		std::cout << "texture load failed\n";
 		exit(1);
 	}
-
 	texturesTable.try_emplace("babyleft", babyLeft);
 	texturesTable.try_emplace("babyright", babyRight);
 	texturesTable.try_emplace("groundCloud", groundCloud);
@@ -303,9 +309,12 @@ void Game::initSoundBuffers(std::map<std::string, const sf::SoundBuffer, std::le
 	soundBuffersTable.try_emplace("rope", rope);
 }
 
-
+/// <summary>
+/// Initialise les RoundTarget et le niveau
+/// </summary>
+/// <param name="soundBuffersTable"></param>
 void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::unique_ptr<Group>> &levelsTable) {
-	//initialise les RoundTargets
+	// On initialise les RoundTarget
 	for (int i = 0;i < nbCercles;++i) {
 		int radius = rando(10, 50);
 		sf::Color couleur = couleurAleatoire();
@@ -317,15 +326,14 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::
 		mTargetsTable.push_back(target);
 	}
 
+	//On lit le fichier xml du monde et on charge tous les éléments de chaque niveau dans un groupe respectivement, puis on ajoute tous ces groupes
+	//à un vecteur de niveaux.
 	pugi::xml_document doc;
 	if (auto result = doc.load_file("resources/monde1.xml"); !result)
 	{
 		std::cerr << "Could not open file monde2.xml because " << result.description() << std::endl;
 		exit(1);
 	}
-
-	//On lit le fichier xml du monde et on charge tous les éléments de chaque niveau dans un groupe respectivement, puis on ajoute tous ces groupes
-	//à un vecteur de niveaux.
 	for (auto const& child : doc.child("Monde"))
 	{
 		auto grp = std::make_unique<Group>(child);
@@ -333,9 +341,12 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::
 		grp->setSoundBuffer(soundBuffers);
 		levelsTable.push_back(std::move(grp));
 	}
-
 }
 
+/// <summary>
+/// Met à jour le jeu
+/// </summary>
+/// <param name="elapsedTime"></param>
 void Game::update(sf::Time elapsedTime)
 {
 	//laisser un temps pour charger les images au début
@@ -343,8 +354,7 @@ void Game::update(sf::Time elapsedTime)
 		--loadingTime;
 
 	///animation qui zoom vers la "vraie fenêtre" de jeu au début et à chaque changement de niveau
-	if (loadingTime <= 0) {
-		
+	if (loadingTime <= 0) {		
 		if (altView.getSize().x > 1024) {
 			//on réduit la longueur de la vue
 			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);
@@ -366,6 +376,7 @@ void Game::update(sf::Time elapsedTime)
 			canStart = true;
 		}
 	}
+
 	//gère l'animation lorsque les RoundTargets meurent
 	for (auto target = mTargets.begin(); target != mTargets.end(); ++target) {
 		//on retire de la liste un RoundTarget mort
@@ -380,17 +391,19 @@ void Game::update(sf::Time elapsedTime)
 		}
 		target -> update(elapsedTime, altView);
 	}
+
+	//on met à jour tous les éléments du niveau actuel
 	if (canStart) {
-		//on met à jour tous les éléments du niveau actuel
 		levels[curLevel]->update(elapsedTime, altView, textures);
 		levels[curLevel]->collide(levels[curLevel]->getPos(), levels[curLevel]->getSiz(), elapsedTime, true);
 	}
-
 }
 
+/// <summary>
+/// Génère les visuels du jeu
+/// </summary>
 void Game::render()
 {
-
 	mWindow.clear(sf::Color(248,250,245));//c'est la couleur de la bulle de rêve de l'image au début du jeu
 
 
@@ -401,10 +414,12 @@ void Game::render()
 		mWindow.draw(levelStartScreen);
 	}
 
+	// on dessine les cibles
 	for (auto const &target : mTargets) {
 		target.drawCurrent(mWindow);
 	}
 
+	// on dessine le niveau et ses éléments
 	levels[curLevel]->drawCurrent(mWindow);
 
 	mWindow.setView(mWindow.getDefaultView()); //... et ceux de l'UI dans la vue par défaut qui ne bouge pas
@@ -412,6 +427,10 @@ void Game::render()
 	mWindow.display();
 }
 
+/// <summary>
+/// Met à jour les paramètres de déboguage
+/// </summary>
+/// <param name="elapsedTime"></param>
 void Game::updateStatistics(sf::Time elapsedTime)
 {
 	mStatisticsUpdateTime += elapsedTime;
@@ -436,7 +455,6 @@ void Game::updateStatistics(sf::Time elapsedTime)
 
 				"View center pos = " + toString(altView.getCenter().x) + "  " + toString(altView.getCenter().y) + "\n" +
 				"View size = " + toString(altView.getSize().x) + "  " + toString(altView.getSize().y)
-	
 			);
 							 
 		mStatisticsUpdateTime -= sf::seconds(1.0f);

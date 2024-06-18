@@ -18,7 +18,6 @@ public:
     void                    isDying();
 
 private:
-
     enum RoundTargetStatus  status;
     sf::Vector2f            mSpeed;
     sf::CircleShape			mShape;
@@ -26,5 +25,4 @@ private:
     int                     deathCountdown=60;
 };
 
-
-#endif //SIMPLE_GAME_ROUND_TARGET_H
+#endif SIMPLE_GAME_ROUND_TARGET_H

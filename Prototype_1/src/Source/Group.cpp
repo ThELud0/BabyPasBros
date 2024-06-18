@@ -1,9 +1,8 @@
 #include "Group.hpp"
 using namespace std::literals;
 
-
 /// <summary>
-/// lecture d'un node xml représentant un niveau dont le nom est donné dans un label, qui sera utilisé pour nommer la fenêtre 
+/// Lecture d'un node xml représentant un niveau dont le nom est donné dans un label, qui sera utilisé pour nommer la fenêtre 
 /// de jeu du-dit niveau
 /// les éléments du niveau sont initialisés dans un groupe constitué d'un joueur MainCharacter
 /// et (pour l'instant) d'une liste de murs Wall et de portes Door.
@@ -13,25 +12,17 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 	for (auto const& child : node.children()) {
 		if (child.name() == "Player"sv) {
 			mainCharacter = std::make_unique<Player>(child);
-		}
-		
-		else if (child.name() == "Wall"sv) {
+		} else if (child.name() == "Wall"sv) {
 			auto s = std::make_unique<Wall>(child);
 			children.push_back(std::move(s));
-		}
-
-		else if (child.name() == "Door"sv) {
+		} else if (child.name() == "Door"sv) {
 			auto s = std::make_unique<Door>(child);
 			children.push_back(std::move(s));
-		}
-
-		else if (child.name() == "Pacifier"sv) {
+		} else if (child.name() == "Pacifier"sv) {
 			pacifier = std::make_unique<Pacifier>(child);
 		}
-		
 	}
 }
-
 
 /// <summary>
 /// Les objets du groupe prennent chacun leur texture parmi celles disponibles, 
@@ -76,6 +67,7 @@ void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::st
 	mainCharacter->update(elapsedTime, view, textures);
 	
 }
+
 /// <summary>
 /// Appelle la fonction collide du mainCharacter et des éléments du groupe.
 /// </summary>
@@ -110,8 +102,9 @@ void Group::drawCurrent(sf::RenderWindow& window) const {
 std::string Group::returnName() const {
 	return windowName;
 }
+
 /// <summary>
-/// Retourne la position du joueur
+/// retourne la position (x,y) du joueur contenu dans le groupe
 /// </summary>
 /// <returns></returns>
 sf::Vector2f Group::getPos() {
@@ -119,7 +112,7 @@ sf::Vector2f Group::getPos() {
 }
 
 /// <summary>
-/// Retourne la taille du joueur
+/// retourne la taille (width,height) du joueur contenu dans le groupe
 /// </summary>
 /// <returns></returns>
 sf::Vector2f Group::getSiz() {
@@ -147,7 +140,11 @@ void Group::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPresse
 		entity->handlePlayerInput(key,isPressed);
 	}
 }
-//harponne le joueur vers le RoundTarget cliqué
+
+/// <summary>
+/// Harponne le joueur vers le RoundTarget cliqué
+/// </summary>
+/// <param name="targetPos"></param>
 void Group::dragTowards(sf::Vector2f targetPos) {
 	mainCharacter->dragTowards(targetPos);
 }

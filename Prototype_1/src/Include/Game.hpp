@@ -25,8 +25,6 @@ class Game : private sf::NonCopyable
 		void					updateStatistics(sf::Time elapsedTime);
 
 		static const sf::Time	TimePerFrame;
-		
-
 		std::map<std::string, const sf::Texture, std::less<>> textures;
 		std::map<std::string, const sf::SoundBuffer, std::less<>> soundBuffers;
 		bool									canStart{ false };
@@ -37,11 +35,9 @@ class Game : private sf::NonCopyable
 		sf::View								altView{sf::Vector2f(235.f,1288.f),sf::Vector2f(5270.f, 4176.f)}; 
 
 		sf::RenderWindow						mWindow{sf::VideoMode{1024,768}, "SFML Application", sf::Style::Close};
-
 		int										loadingTime{ 150 };
 		float									startingAnimationTime{ 240 }; // en 1/60e de secondes
 		sf::RectangleShape						levelStartScreen;
-
 		std::vector<std::unique_ptr<Group>>		levels;
 		int										curLevel = 0;
         std::vector<RoundTarget>				mTargets;
@@ -51,4 +47,4 @@ class Game : private sf::NonCopyable
 		std::size_t								mStatisticsNumFrames{0};
 };
 
-#endif // BOOK_GAME_HPP
+#endif BOOK_GAME_HPP

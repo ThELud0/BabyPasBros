@@ -20,10 +20,10 @@ public:
 	sf::Vector2f	getPos() override;
 	sf::Vector2f	getSiz() override;
 	std::string		returnName() const;
+
 private:
 	std::string const						windowName;
 	std::vector<std::unique_ptr<Entity>>	children;
 	std::unique_ptr<Player>					mainCharacter;
 	std::unique_ptr<Pacifier>				pacifier;
-
 };
