@@ -59,11 +59,13 @@ void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::les
 /// <param name="view"></param>
 /// <param name="textures"></param>
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
-	mainCharacter->update(elapsedTime, view, textures);
+	
 	pacifier->update(elapsedTime, view, textures);
 	for (auto const& entity : children) {
 		entity->update(elapsedTime, view, textures);
 	}
+	mainCharacter->update(elapsedTime, view, textures);
+	
 }
 
 /// <summary>
@@ -117,8 +119,9 @@ sf::Vector2f Group::getSiz() {
 	return mainCharacter->getSiz();
 }
 
+
 /// <summary>
-/// retourne un booléen valant true si le joueur peut passer au niveau suivant, false sinon
+/// Retourne si le joueur se trouve sur la tétine ou non
 /// </summary>
 /// <returns></returns>
 bool Group::nextLevel() const {

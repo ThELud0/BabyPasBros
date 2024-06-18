@@ -10,7 +10,8 @@ namespace RoundTarget_test {
     constexpr auto speed = 100.f;
     const sf::View altView{ sf::Vector2f(0.f,0.f),sf::Vector2f(1000.f, 1000.f) };
 
-    TEST(RoundTargetTest, update_noBounce) {
+    TEST(RoundTargetTest, update_noBounce) 
+    {
         RoundTarget target{radius, sf::Color::Cyan, notScreenBoundary, notScreenBoundary, speed, speed };
 
         target.update(elapsedTime, altView);
@@ -86,7 +87,5 @@ namespace RoundTarget_test {
         EXPECT_FALSE(target.isHitByMouse(mousePosition));
 
     }
-
-    
 
 }
