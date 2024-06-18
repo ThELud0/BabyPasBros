@@ -38,7 +38,7 @@ class Game : private sf::NonCopyable
 
 		sf::RenderWindow						mWindow{sf::VideoMode{1024,768}, "SFML Application", sf::Style::Close};
 
-		int										loadingTime{ 120 };
+		int										loadingTime{ 150 };
 		float									startingAnimationTime{ 240 }; // en 1/60e de secondes
 		sf::RectangleShape						levelStartScreen;
 

@@ -349,7 +349,7 @@ void Game::update(sf::Time elapsedTime)
 			//on réduit la longueur de la vue
 			altView.setSize(altView.getSize().x - (4246.f / startingAnimationTime), altView.getSize().y);
 			//on garde la vue proche du personnage
-			altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + 77 - altView.getCenter().x) / startingAnimationTime,
+			altView.setCenter(altView.getCenter().x + (levels[curLevel]->getPos().x + levels[curLevel]->getSiz().x/2 - altView.getCenter().x) / (startingAnimationTime * 1024 * 2 / altView.getSize().y),
 				altView.getCenter().y);
 			canStart = false;
 		}
@@ -358,7 +358,7 @@ void Game::update(sf::Time elapsedTime)
 			altView.setSize(altView.getSize().x, altView.getSize().y - (3408.f / startingAnimationTime));
 			//on garde la vue proche du personnage
 			altView.setCenter(altView.getCenter().x,
-				(levels[curLevel]->getPos().y - 212 - altView.getCenter().y) / startingAnimationTime + altView.getCenter().y);
+				(levels[curLevel]->getPos().y - altView.getCenter().y - levels[curLevel]->getSiz().y/2 ) / (startingAnimationTime * 768 * 2 / altView.getSize().y) + altView.getCenter().y);
 			canStart = false;
 		}
 		if ((altView.getSize().x <= 1024) && (altView.getSize().y <= 768)) {
@@ -391,10 +391,12 @@ void Game::update(sf::Time elapsedTime)
 void Game::render()
 {
 
-	mWindow.clear(sf::Color(248,250,245));//c'est la couleur de la bulle de rêve de l'image au début du jeu!
-	mWindow.setView(altView);
-	if (!canStart)
+	mWindow.clear(sf::Color(248,250,245));//c'est la couleur de la bulle de rêve de l'image au début du jeu
+	mWindow.setView(altView); //on dessine les éléments du jeu qui vont glisser dans la vue alternative...
+	if (!canStart) {
+		mWindow.clear(sf::Color(64, 145, 162));//c'est la couleur du ciel dans l'image au début du jeu
 		mWindow.draw(levelStartScreen);
+	}
 
 	for (auto const &target : mTargets) {
 		target.drawCurrent(mWindow);
@@ -402,7 +404,7 @@ void Game::render()
 
 	levels[curLevel]->drawCurrent(mWindow);
 
-	mWindow.setView(mWindow.getDefaultView()); //on dessine les éléments du jeu qui vont glisser dans la vue alternative, et ceux de l'UI dans la vue par défaut qui ne bouge pas
+	mWindow.setView(mWindow.getDefaultView()); //... et ceux de l'UI dans la vue par défaut qui ne bouge pas
 	mWindow.draw(mStatisticsText);
 	mWindow.display();
 }

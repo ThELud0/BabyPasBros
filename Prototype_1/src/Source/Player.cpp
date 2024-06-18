@@ -171,21 +171,29 @@ void	Player::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::s
 	
 	///si le joueur s'approche des bords horizontaux de la vue, on la "glisse" pour suivre le joueur et se déplacer au delà 
 	///de ce qui est visible dans la fenêtre initiale
-	if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2 + static_cast<float>(mChar.getTextureRect().getSize().x * 1.5)) || (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - static_cast<float>(mChar.getTextureRect().getSize().x * 3.5))) {
+	if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2 + static_cast<float>(mChar.getTextureRect().getSize().x * 2)) 
+		|| (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - static_cast<float>(mChar.getTextureRect().getSize().x * 3))) 
+	{
 		///la vue coulisse à la même vitesse que le joueur.
 		view.move(movement.x * elapsedTime.asSeconds(),0.f);
 
 		///si le joueur fini hors de l'écran par exemple à cause d'un respawn suite au changement de niveau
 		///ou d'un autre bug, la vue se recentre sur le joueur.
-		if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2 + static_cast<float>(mChar.getTextureRect().getSize().x * 1.5) - 1) || (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - static_cast<float>(mChar.getTextureRect().getSize().x) * 3.5 + 1)) {
+		if ((mChar.getPosition().x < view.getCenter().x - view.getSize().x / 2 + static_cast<float>(mChar.getTextureRect().getSize().x * 2) - 1) 
+			|| (mChar.getPosition().x > view.getCenter().x + view.getSize().x / 2 - static_cast<float>(mChar.getTextureRect().getSize().x) * 3 + 1)) 
+		{
 			view.move(mChar.getPosition().x - view.getCenter().x, 0.f);
 		}
 	}
 	///idem pour les bords verticaux de la vue.
-	if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 3.5)) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y * 1.5))) {
+	if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 3)) 
+		|| (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y * 2))) 
+	{
 		view.move(0.f, movement.y * elapsedTime.asSeconds());
 
-		if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 3.5) + 1) || (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y * 1.5) - 1)) {
+		if ((mChar.getPosition().y > view.getCenter().y + view.getSize().y / 2 - static_cast<float>(mChar.getTextureRect().getSize().y * 3) + 1) 
+			|| (mChar.getPosition().y < view.getCenter().y - view.getSize().y / 2 + static_cast<float>(mChar.getTextureRect().getSize().y * 2) - 1)) 
+		{
 			view.move(0.f, mChar.getPosition().y - view.getCenter().y);
 		}
 	}
