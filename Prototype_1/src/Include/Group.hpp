@@ -2,7 +2,6 @@
 #include "Player.hpp"
 #include "Wall.hpp"
 #include "Door.hpp"
-#include "Enemy.hpp"
 #pragma once
 
 class Group : public Entity {
