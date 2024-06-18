@@ -6,7 +6,7 @@
 
 add_executable(tests
         RoundTargetTest.cpp
-)
+ "WallTest.cpp")
 target_include_directories(tests
         PRIVATE
         ../src/Include
