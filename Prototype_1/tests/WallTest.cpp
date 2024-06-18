@@ -6,8 +6,6 @@
 
 namespace Wall_test {
 
-
-
     TEST(WallTest, playerOnLeft_collision) {
 
 		std::string sc = R"(<?xml version="1.0"?>

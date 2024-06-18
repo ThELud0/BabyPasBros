@@ -2,7 +2,6 @@
 #include <random>
 using namespace std::literals;
 
-
 /// <summary>
 /// Initialise le joueur à une position (x,y) avec une taille (width,height).
 /// </summary>
