@@ -68,11 +68,12 @@ void Group::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::les
 /// <param name="view"></param>
 /// <param name="textures"></param>
 void Group::update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) {
-	mainCharacter->update(elapsedTime, view, textures);
+	
 	pacifier->update(elapsedTime, view, textures);
 	for (auto const& entity : children) {
 		entity->update(elapsedTime, view, textures);
 	}
+	mainCharacter->update(elapsedTime, view, textures);
 	
 }
 /// <summary>
@@ -109,15 +110,27 @@ void Group::drawCurrent(sf::RenderWindow& window) const {
 std::string Group::returnName() const {
 	return windowName;
 }
-
+/// <summary>
+/// Retourne la position du joueur
+/// </summary>
+/// <returns></returns>
 sf::Vector2f Group::getPos() {
 	return mainCharacter -> getPos();
 }
 
+/// <summary>
+/// Retourne la taille du joueur
+/// </summary>
+/// <returns></returns>
 sf::Vector2f Group::getSiz() {
 	return mainCharacter->getSiz();
 }
 
+
+/// <summary>
+/// Retourne si le joueur se trouve sur la tétine ou non
+/// </summary>
+/// <returns></returns>
 bool Group::nextLevel() const {
 	return pacifier->passLevel();
 }

@@ -318,7 +318,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::
 	}
 
 	pugi::xml_document doc;
-	if (auto result = doc.load_file("resources/monde2.xml"); !result)
+	if (auto result = doc.load_file("resources/monde1.xml"); !result)
 	{
 		std::cerr << "Could not open file monde2.xml because " << result.description() << std::endl;
 		exit(1);
@@ -392,6 +392,9 @@ void Game::render()
 {
 
 	mWindow.clear(sf::Color(248,250,245));//c'est la couleur de la bulle de rêve de l'image au début du jeu
+
+
+
 	mWindow.setView(altView); //on dessine les éléments du jeu qui vont glisser dans la vue alternative...
 	if (!canStart) {
 		mWindow.clear(sf::Color(64, 145, 162));//c'est la couleur du ciel dans l'image au début du jeu
