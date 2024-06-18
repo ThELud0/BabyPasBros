@@ -2,7 +2,6 @@
 #include <random>
 using namespace std::literals;
 
-
 /// <summary>
 /// Initialise le joueur à une position (x,y) avec une taille (width,height).
 /// </summary>
@@ -15,7 +14,7 @@ Player::Player(float x, float y, int height, int width) : Entity{ x, y, height, 
 }
 
 /// <summary>
-/// Initialise le jour à une position (x,y) avec une taille (width,height),
+/// Initialise le joueur à une position (x,y) avec une taille (width,height),
 /// ces paramètres étant récupérés à partir d'un node xml.
 /// </summary>
 /// <param name="node"></param>
@@ -88,7 +87,6 @@ void Player::drawCurrent(sf::RenderWindow& window) const {
 /// <param name="key"></param>
 /// <param name="isPressed"></param>
 void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
- 
 	///Un saut n'est possible que si le joueur touche le sol (collideDown)
 	if (((key == sf::Keyboard::Z) || (key == sf::Keyboard::Space)) && collideDown) {
 		mIsMovingUp = true;

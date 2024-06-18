@@ -1,5 +1,4 @@
 #include "Entity.hpp"
-
 #pragma once
 
 class Door : public Entity {
@@ -14,13 +13,12 @@ public:
 	void			collide(sf::Vector2f mcPos, sf::Vector2f mcSize, const sf::Time& elapsedTime, bool physical) override;
 	void			update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) override;
 	void			handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) override;
-
 	bool			isVertical() const;
+
 private:
 	sf::RectangleShape	wShape;
 	sf::Sound			mDoorSound;
 	const bool			vertical;
 	bool				isNear{ false };
 	sf::RectangleShape	doorText;
-
 };
