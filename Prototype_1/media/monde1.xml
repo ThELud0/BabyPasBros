@@ -32,160 +32,11 @@
 			<Wall x="1900" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2000" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2100" y="100" h="100" w="100" vertical="false"/>
-		</Niveau>
 
-		<Niveau label="M1_Niveau2">
-			<Player x="500" y="300" h="106" w="144"/>
-			<Wall x="0" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="100" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="200" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="300" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="400" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="500" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="600" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="700" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="800" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="900" y="700" h="100" w="100" vertical="true"/>
-			<Wall x="900" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1000" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1100" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1200" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1300" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1400" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="1500" y="600" h="100" w="100" vertical="true"/>
-			<Wall x="1500" y="500" h="100" w="100" vertical="true"/>
-			<Wall x="1500" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="1600" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="1700" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="1800" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="1900" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2000" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2100" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2200" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2300" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2400" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2500" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2600" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2700" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2800" y="400" h="100" w="100" vertical="false"/>
-			<Wall x="2900" y="400" h="100" w="100" vertical="true"/>
-			<Wall x="2900" y="300" h="100" w="100" vertical="true"/>
-			<Wall x="2900" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="3000" y="200" h="100" w="100" vertical="false"/>
 
-			<Wall x="3100" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="3200" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="3300" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="3300" y="300" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="400" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="500" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="600" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="700" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="800" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="900" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="1000" h="100" w="100" vertical="true"/>
-			<Wall x="3300" y="1100" h="100" w="100" vertical="true"/>
-			<Wall x="3400" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="3500" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="3600" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="3700" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="3800" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="3900" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="4000" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="4100" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="4200" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="4300" y="1100" h="100" w="100" vertical="false"/>
-			<Wall x="4400" y="1100" h="100" w="100" vertical="true"/>
-			<Wall x="4400" y="1000" h="100" w="100" vertical="true"/>
-			<Wall x="4400" y="900" h="100" w="100" vertical="true"/>
-			<Wall x="4400" y="800" h="100" w="100" vertical="true"/>
-			<Wall x="4400" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4500" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4600" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4700" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4800" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4900" y="700" h="100" w="100" vertical="true"/>
-			<Wall x="4900" y="600" h="100" w="100" vertical="true"/>
-			<Wall x="4900" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5000" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5100" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5200" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5300" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5400" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5500" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5600" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5700" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5800" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="5900" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="6000" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="6100" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="6200" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="6300" y="500" h="100" w="100" vertical="false"/>
-			<Wall x="6400" y="500" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="400" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="300" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="200" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="100" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="0" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-100" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-200" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-300" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-400" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-500" h="100" w="100" vertical="true"/>
-			<Wall x="6400" y="-600" h="100" w="100" vertical="true"/>
-
-			<Door x="5350" y="200" h="300" w="200" vertical="true"/>
-			<Wall x="5400" y="0" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="100" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-100" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-200" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-300" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-400" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-500" h="100" w="100" vertical="true"/>
-			<Wall x="5400" y="-600" h="100" w="100" vertical="true"/>
-
-			<Wall x="3700" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="3800" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="3900" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="4000" y="700" h="100" w="100" vertical="false"/>
-
-			<Wall x="4200" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="4300" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="4400" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="4500" y="200" h="100" w="100" vertical="false"/>
-			<Wall x="4600" y="200" h="100" w="100" vertical="false"/>
-
-			<Wall x="2200" y="100" h="100" w="100" vertical="false"/>
-			<Wall x="2300" y="100" h="100" w="100" vertical="false"/>
-			<Wall x="2400" y="100" h="100" w="100" vertical="false"/>
-			<Wall x="2500" y="100" h="100" w="100" vertical="false"/>
-		</Niveau>
-
-		<Niveau label="M1_Niveau3">
-			<!-- Crée un élément en position (x,y) de taille (w,h) -->
-			<Player x="400" y="300" h="106" w="144"/>
-			<Wall x="-600" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="-500" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="-400" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="-300" y="600" h="100" w="100" vertical="false"/>
-			<Wall x="-300" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="-200" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="-100" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="0" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="100" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="200" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="300" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="400" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="500" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="600" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="700" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="800" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="900" y="700" h="100" w="100" vertical="false"/>
-			<Wall x="1000" y="700" h="100" w="100" vertical="false"/>
-			<Door x="600" y="400" h="332" w="152" vertical="true"/>
 		</Niveau>
 		
-		<Niveau label="M1_Niveau4">
+		<Niveau label="M1_Niveau2">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->
 			<Player x="400" y="300" h="106" w="144"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
@@ -193,6 +44,5 @@
 			<Door x="600" y="400" h="332" w="152" vertical="true"/>
 			<Wall x="-100" y="600" h="85" w="256" vertical="false"/>
 		</Niveau>
-
 	</Monde>
 

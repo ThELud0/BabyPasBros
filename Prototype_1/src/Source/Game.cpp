@@ -140,7 +140,7 @@ void Game::processEvents()
 				}
 				// Passe au niveau suivant si clique droit, à changer pour que le passage de niveau soit déclenché par un autre évènement du jeu...
 				else if (event.mouseButton.button == sf::Mouse::Right) {
-					curLevel = (curLevel + 1 ) % 4;
+					++curLevel;
 					levels[curLevel]->setTexture(textures);
 					levels[curLevel]->drawCurrent(mWindow);
 					mWindow.setTitle(levels[curLevel]->returnName());
