@@ -90,7 +90,7 @@ void Player::drawCurrent(sf::RenderWindow& window) const {
 void Player::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) {
  
 	///Un saut n'est possible que si le joueur touche le sol (collideDown)
-	if ((key == sf::Keyboard::Z) && collideDown) {
+	if (((key == sf::Keyboard::Z) || (key == sf::Keyboard::Space)) && collideDown) {
 		mIsMovingUp = true;
 		mJumpSound.play();
 	}
