@@ -1,5 +1,6 @@
 @startuml
 
+
 title BabyPasBros - Class Diagram
 
 
@@ -95,6 +96,16 @@ vector<unique_ptr<Entity>>  children;
 unique_ptr<Player>                  mainCharacter;
 }
 
+class Pacifier {
+explicit  Pacifier(float x, float y, int height, int width);
+explicit  Pacifier(const pugi::xml_node& node);
+bool      passLevel() const;
+sf::RectangleShape  wShape;
+const bool                  nextLevel;
+bool                              isNear;
+sf::RectangleShape  pacifierText;
+}
+
 
 
 
@@ -105,8 +116,13 @@ Entity <|-- Wall
 Entity <|-- Player
 Entity <|-- Group
 Entity <|-- Door
+Entity <|-- Pacifier
 Group "1" *-- "*" Wall
 Group "1" *-- "1" Player
 Group "1" *-- "*" Door
+Group "1" *-- "1" Pacifier
+Group "1" *-- "*" Entity
+
+
 
 @enduml
