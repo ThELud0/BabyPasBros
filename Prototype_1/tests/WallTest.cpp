@@ -29,17 +29,18 @@ namespace Wall_test {
 		for (auto const& child : doc.child("Monde"))
 		{
 			auto grp = std::make_unique<Group>(child);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x);
+			float position_initiale = grp->getPos().x;
+			EXPECT_EQ(grp->getPos().x, position_initiale);
 
 			grp->handlePlayerInput(sf::Keyboard::D, false);
 			grp->update(elapsedTime, altView, textures);
 			grp->collide(grp->getPos(), grp->getSiz(), elapsedTime, true);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x);
+			EXPECT_EQ(grp->getPos().x, position_initiale);
 
 			grp->handlePlayerInput(sf::Keyboard::D, true);
 			grp->update(elapsedTime, altView, textures);
 			grp->collide(grp->getPos(), grp->getSiz(), elapsedTime, true);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x);
+			EXPECT_EQ(grp->getPos().x, position_initiale);
 
 			
 		}
@@ -55,7 +56,7 @@ namespace Wall_test {
 			<Player x="0" y="-106" h="106" w="144"/>
 			<Pacifier x="-420" y="-196" h="196" w="184"/>
 			<Wall x="0" y="0" h="168" w="512" vertical="false"/>
-			<Wall x="146" y="-700" h="700" w="512" vertical="true"/>
+			<Wall x="150" y="-700" h="700" w="512" vertical="true"/>
 		</Niveau>
 	</Monde>)";
 		pugi::xml_document doc;
@@ -63,18 +64,20 @@ namespace Wall_test {
 		ASSERT_TRUE(result) << result.description();
 		for (auto const& child : doc.child("Monde"))
 		{
+			
 			auto grp = std::make_unique<Group>(child);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x);
+			float position_initiale = grp->getPos().x;
+			EXPECT_EQ(grp->getPos().x, position_initiale);
 
 			grp->handlePlayerInput(sf::Keyboard::D, false);
 			grp->update(elapsedTime, altView, textures);
 			grp->collide(grp->getPos(), grp->getSiz(), elapsedTime, true);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x);
+			EXPECT_EQ(grp->getPos().x, position_initiale);
 
 			grp->handlePlayerInput(sf::Keyboard::D, true);
 			grp->update(elapsedTime, altView, textures);
 			grp->collide(grp->getPos(), grp->getSiz(), elapsedTime, true);
-			EXPECT_EQ(grp->getPos().x, grp->getPos().x + PlayerSpeed * elapsedTime.asSeconds());
+			EXPECT_EQ(grp->getPos().x, position_initiale + PlayerSpeed * elapsedTime.asSeconds());
 
 
 		}
