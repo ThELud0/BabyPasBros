@@ -42,7 +42,6 @@ Group::Group(const pugi::xml_node& node) : Entity{ 0,0,0,0 }, windowName(node.at
 void Group::setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) {
 	mainCharacter->setTexture(textures);
 	pacifier->setTexture(textures);
-
 	for (auto const& entity : children) {
 		entity->setTexture(textures);
 	}	

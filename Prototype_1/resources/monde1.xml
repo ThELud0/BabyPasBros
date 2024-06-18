@@ -3,28 +3,32 @@
 		<Niveau label="M1_Niveau1">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->     
 			<Player x="400" y="300" h="106" w="144"/>
-			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
-			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
-			<Door x="100" y="400" h="332" w="152" vertical="true"/>
-			<Wall x="1200" y="600" h="85" w="256" vertical="false"/>
-			<Wall x="700" y="400" h="85" w="256" vertical="false"/>
-			<Wall x="1200" y="200" h="85" w="256" vertical="false"/>
-			<Wall x="470" y="0" h="130" w="512" vertical="false"/>
+			<Pacifier x="100" y="300" h="196" w="184"/>
 
+			<Wall x="000" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="100" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="200" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="300" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="400" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="500" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="600" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="700" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="800" y="500" h="100" w="100" vertical="false"/>
+			<Wall x="900" y="500" h="100" w="100" vertical="false"/>
 			<Wall x="1100" y="500" h="100" w="100" vertical="false"/>
 			<Wall x="1200" y="500" h="100" w="100" vertical="false"/>
-
 			<Wall x="1300" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="1400" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="1500" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="1600" y="700" h="100" w="100" vertical="false"/>
-
+			
 			<Wall x="1500" y="300" h="100" w="100" vertical="false"/>
 			<Wall x="1600" y="300" h="100" w="100" vertical="false"/>
 
 			<Wall x="1900" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2000" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2100" y="100" h="100" w="100" vertical="false"/>
+
 		</Niveau>
 
 		<Niveau label="M1_Niveau2">
@@ -152,6 +156,9 @@
 			<Wall x="2300" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2400" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2500" y="100" h="100" w="100" vertical="false"/>
+
+			<Pacifier x="6000" y="300" h="196" w="184"/>
+
 		</Niveau>
 
 		<Niveau label="M1_Niveau3">
@@ -176,12 +183,13 @@
 			<Wall x="900" y="700" h="100" w="100" vertical="false"/>
 			<Wall x="1000" y="700" h="100" w="100" vertical="false"/>
 			<Door x="600" y="400" h="332" w="152" vertical="true"/>
+			<Pacifier x="0" y="400" h="196" w="184"/>
 		</Niveau>
 		
 		<Niveau label="M1_Niveau4">
 			<!-- Crée un élément en position (x,y) de taille (w,h) -->
 			<Player x="400" y="300" h="106" w="144"/>
-			<Pacifier x="-42" y="-196" h="196" w="184"/>
+			<Pacifier x="-100" y="400" h="196" w="184"/>
 			<Wall x="0" y="700" h="168" w="512" vertical="false"/>
 			<Wall x="512" y="700" h="168" w="512" vertical="false"/>
 			<Door x="600" y="400" h="332" w="152" vertical="true"/>
