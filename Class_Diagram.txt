@@ -94,6 +94,7 @@ string    returnName() const;
 string const                                windowName;
 vector<unique_ptr<Entity>>  children;
 unique_ptr<Player>                  mainCharacter;
+unique_ptr<Pacifier>                pacifier;
 }
 
 class Pacifier {
