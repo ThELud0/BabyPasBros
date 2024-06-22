@@ -29,7 +29,6 @@ class RoundTarget
 
 
 class Entity {
-explicit				Entity(float x, float y, int hei, int wid) ;
 explicit				Entity(const pugi::xml_node& node);
 virtual void			setTexture(...) = 0;
 virtual void			drawCurrent(sf::RenderWindow& window) const = 0;
@@ -48,23 +47,44 @@ bool          physical;
 
 }
 
+class UnmovingEntity {
+	explicit				UnmovingEntity(const pugi::xml_node& node);
+	void					drawCurrent(sf::RenderWindow& window) const;
+	sf::Vector2f			getPos() override;
+	sf::Vector2f			getSiz() override;
+	bool					isVertical() const;
+
+	sf::RectangleShape	wShape;
+	const bool			vertical;
+}
+
+class InteractiveUnmoving {
+explicit				InteractiveUnmoving(const pugi::xml_node& node);
+void					drawCurrent(sf::RenderWindow& window) const override;
+
+sf::Sound			mSound;
+bool				        isNear;
+sf::RectangleShape	mText;
+}
+
 
 class Wall {
-explicit    Wall(float x, float y, int height, int width, const bool &vertical);
-explicit    Wall(const pugi::xml_node& node);
-sf::RectangleShape  wShape;
-const bool                  vertical;
+explicit        Wall(const pugi::xml_node& node);
+	void					setTexture(...) override;
+	void					setSoundBuffer(...) override;
+	void					collide(...) override;
+	void					update(...) override;
+	void					handlePlayerInput(...) override;
 }
 
 
 class Door {
-explicit  Door(float x, float y, int height, int width, const bool& vertical);
-explicit  Door(const pugi::xml_node& node);
-bool      isVertical() const;
-sf::RectangleShape  wShape;
-const bool                  vertical;
-bool                              isNear;
-sf::RectangleShape  doorText;
+	explicit		Door(const pugi::xml_node& node);
+	void			setTexture(...) override;
+	void                setSoundBuffer(...) override;
+	void			collide(...) override;
+	void			update(...) override;
+	void			handlePlayerInput(...) override;
 }
 
 
@@ -98,13 +118,15 @@ unique_ptr<Pacifier>                pacifier;
 }
 
 class Pacifier {
-explicit  Pacifier(float x, float y, int height, int width);
-explicit  Pacifier(const pugi::xml_node& node);
-bool      passLevel() const;
-sf::RectangleShape  wShape;
-const bool                  nextLevel;
-bool                              isNear;
-sf::RectangleShape  pacifierText;
+	explicit		Pacifier(const pugi::xml_node& node);
+	void			setTexture(...) override;
+	void                setSoundBuffer(...) override;
+	void			collide(...) override;
+	void			update(...) override;
+	void			handlePlayerInput(...) override;
+	bool			passLevel() const;
+
+	-bool				nextLevel;
 }
 
 
@@ -113,11 +135,13 @@ sf::RectangleShape  pacifierText;
 Main *-- Game
 Game "1" *-up- "*" RoundTarget
 Game "1" *--- "*" Group
-Entity <|-- Wall
+Entity <|-- UnmovingEntity
+UnmovingEntity <|-- Wall
+UnmovingEntity <|-- InteractiveUnmoving
 Entity <|-- Player
 Entity <|-- Group
-Entity <|-- Door
-Entity <|-- Pacifier
+InteractiveUnmoving <|-- Door
+InteractiveUnmoving <|-- Pacifier
 Group "1" *-- "*" Wall
 Group "1" *-- "1" Player
 Group "1" *-- "*" Door
