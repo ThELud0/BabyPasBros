@@ -329,7 +329,7 @@ void Game::initialize(std::vector<RoundTarget> &mTargetsTable, std::vector<std::
 	//On lit le fichier xml du monde et on charge tous les éléments de chaque niveau dans un groupe respectivement, puis on ajoute tous ces groupes
 	//à un vecteur de niveaux.
 	pugi::xml_document doc;
-	if (auto result = doc.load_file("resources/monde1.xml"); !result)
+	if (auto result = doc.load_file("resources/monde2.xml"); !result)
 	{
 		std::cerr << "Could not open file .xml because " << result.description() << std::endl;
 		exit(1);
