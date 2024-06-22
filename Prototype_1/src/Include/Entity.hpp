@@ -19,7 +19,7 @@ public:
 	virtual void			update(const sf::Time& elapsedTime, sf::View& view, std::map<std::string, const sf::Texture, std::less<>>& textures) = 0;
 	virtual void			collide(sf::Vector2f wallPos, sf::Vector2f wallSize, const sf::Time& elapsedTime, bool physical) = 0;
 	virtual void			handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPressed) = 0;
-	bool					getPhysicalState() { return physical; };
+	bool					getPhysicalState() const { return physical; };
 
 	//Spawn coordinates of the entity
 	float					x;
