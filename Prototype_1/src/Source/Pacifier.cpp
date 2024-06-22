@@ -9,14 +9,14 @@ using namespace std::literals;
 /// <param name="y"></param>
 /// <param name="height"></param>
 /// <param name="width"></param>
-Pacifier::Pacifier(float x, float y, int height, int width, bool& vertical) : InteractibleUnmoving{ x, y, height, width, vertical } {}
+Pacifier::Pacifier(float x, float y, int height, int width, bool& vertical) : InteractiveUnmoving{ x, y, height, width, vertical } {}
 
 /// <summary>
 /// Initialise la tétine à une position (x,y) avec une taille (width,height),
 /// ces paramètres étant récupérés à partir d'un node xml.
 /// </summary>
 /// <param name="node"></param>
-Pacifier::Pacifier(const pugi::xml_node& node) : InteractibleUnmoving{ node } {
+Pacifier::Pacifier(const pugi::xml_node& node) : InteractiveUnmoving{ node } {
 	physical = false;
 }
 

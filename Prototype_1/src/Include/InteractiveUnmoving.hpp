@@ -1,10 +1,10 @@
 #include "UnmovingEntity.hpp"
 #pragma once
 
-class InteractibleUnmoving : public UnmovingEntity {
+class InteractiveUnmoving : public UnmovingEntity {
 public:
-	explicit				InteractibleUnmoving(float x, float y, int height, int width, const bool& vertical);
-	explicit				InteractibleUnmoving(const pugi::xml_node& node);
+	explicit				InteractiveUnmoving(float x, float y, int height, int width, const bool& vertical);
+	explicit				InteractiveUnmoving(const pugi::xml_node& node);
 	virtual void			setTexture(std::map<std::string, const sf::Texture, std::less<>>& textures) = 0;
 	virtual void			setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) = 0;
 	void					drawCurrent(sf::RenderWindow& window) const override;

@@ -1,8 +1,8 @@
-#include "InteractibleUnmoving.hpp"
+#include "InteractiveUnmoving.hpp"
 
 #pragma once
 
-class Pacifier : public InteractibleUnmoving {
+class Pacifier : public InteractiveUnmoving {
 public:
 	explicit		Pacifier(float x, float y, int height, int width, bool& vertical);
 	explicit		Pacifier(const pugi::xml_node& node);

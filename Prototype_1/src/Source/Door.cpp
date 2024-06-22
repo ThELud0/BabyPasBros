@@ -8,7 +8,7 @@ using namespace std::literals;
 /// <param name="y"></param>
 /// <param name="height"></param>
 /// <param name="width"></param>
-Door::Door(float x, float y, int height, int width, const bool& vertical) : InteractibleUnmoving{ x, y, height, width, vertical} {
+Door::Door(float x, float y, int height, int width, const bool& vertical) : InteractiveUnmoving{ x, y, height, width, vertical} {
 }
 
 /// <summary>
@@ -16,7 +16,7 @@ Door::Door(float x, float y, int height, int width, const bool& vertical) : Inte
 /// ces paramètres étant récupérés à partir d'un node xml.
 /// </summary>
 /// <param name="node"></param>
-Door::Door(const pugi::xml_node& node) : InteractibleUnmoving{ node } {}
+Door::Door(const pugi::xml_node& node) : InteractiveUnmoving{ node } {}
 
 
 /// <summary>

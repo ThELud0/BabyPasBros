@@ -1,7 +1,7 @@
-#include "InteractibleUnmoving.hpp"
+#include "InteractiveUnmoving.hpp"
 #pragma once
 
-class Door : public InteractibleUnmoving {
+class Door : public InteractiveUnmoving {
 public:
 	explicit		Door(float x, float y, int height, int width, const bool& vertical);
 	explicit		Door(const pugi::xml_node& node);
