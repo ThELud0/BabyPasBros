@@ -9,8 +9,8 @@ using namespace std::literals;
 /// <param name="height"></param>
 /// <param name="width"></param>
 InteractiveUnmoving::InteractiveUnmoving(float x, float y, int height, int width, const bool& vertical) : UnmovingEntity{ x, y, height, width, vertical} {
-	mText.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(width) * static_cast<float>(width) / static_cast<float>(height)));
-	mText.setPosition(x, y + static_cast<float>(height) + static_cast<float>(width) * static_cast<float>(width) / static_cast<float>(height) / 2.f);
+	mText.setSize(sf::Vector2f(static_cast<float>(width * 1.5), static_cast<float>(height) / 6.5));
+	mText.setPosition(x + (static_cast<float>(width) - static_cast<float>(width * 1.5)) / 2, y + static_cast<float>(height) / 3.f);
 }
 
 /// <summary>
@@ -19,8 +19,8 @@ InteractiveUnmoving::InteractiveUnmoving(float x, float y, int height, int width
 /// </summary>
 /// <param name="node"></param>
 InteractiveUnmoving::InteractiveUnmoving(const pugi::xml_node& node) : UnmovingEntity{ node } {
-	mText.setSize(sf::Vector2f(static_cast<float>(width * 1.25), static_cast<float>(height) / 5.f));
-	mText.setPosition(x + (static_cast<float>(width) - static_cast<float>(width * 1.25)) / 2, y + static_cast<float>(height) / 3.f);
+	mText.setSize(sf::Vector2f(static_cast<float>(width * 1.5), static_cast<float>(height) / 6.5));
+	mText.setPosition(x + (static_cast<float>(width) - static_cast<float>(width * 1.5)) / 2, y + static_cast<float>(height) / 3.f);
 }
 
 /// <summary>
