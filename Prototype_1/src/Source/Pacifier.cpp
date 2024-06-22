@@ -9,39 +9,17 @@ using namespace std::literals;
 /// <param name="y"></param>
 /// <param name="height"></param>
 /// <param name="width"></param>
-Pacifier::Pacifier(float x, float y, int height, int width) : Entity{ x, y, height, width } {
-	wShape.setPosition(x, y);
-	wShape.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(height)));
-	pacifierText.setSize(sf::Vector2f(static_cast<float>(width * 1.5), static_cast<float>(width * 1.5) * 53.f / 912.f));
-	pacifierText.setPosition(x - 0.25*width, y + static_cast<float>(height) + static_cast<float>(width) * 53.f / 912.f / 2);
-
-}
+Pacifier::Pacifier(float x, float y, int height, int width, bool& vertical) : InteractibleUnmoving{ x, y, height, width, vertical } {}
 
 /// <summary>
 /// Initialise la tétine à une position (x,y) avec une taille (width,height),
 /// ces paramètres étant récupérés à partir d'un node xml.
 /// </summary>
 /// <param name="node"></param>
-Pacifier::Pacifier(const pugi::xml_node& node) : Entity{ node } {
+Pacifier::Pacifier(const pugi::xml_node& node) : InteractibleUnmoving{ node } {
 	physical = false;
-	wShape.setPosition(x, y);
-	wShape.setSize(sf::Vector2f(static_cast<float>(width), static_cast<float>(height)));
-	pacifierText.setSize(sf::Vector2f(static_cast<float>(width * 1.5), static_cast<float>(width * 1.5) * 53.f / 912.f));
-	pacifierText.setPosition(x + (static_cast<float>(width) - static_cast<float>(width * 1.5)) / 2, y);
 }
 
-/// <summary>
-/// dessine la tétine
-/// </summary>
-/// <param name="window"></param>
-void Pacifier::drawCurrent(sf::RenderWindow& window) const {
-	window.draw(wShape);
-	//si le joueur est proche de la tétine, le texte pour paasser au niveau suivant s'affiche
-	if (isNear) {
-		window.draw(pacifierText);
-	}
-
-}
 
 /// <summary>
 /// Permet de donner la texture initiale à la tétine lors de son apparition.
@@ -53,7 +31,7 @@ void Pacifier::setTexture(std::map<std::string, const sf::Texture, std::less<>>&
 			wShape.setTexture(&value);
 		}
 		else if (keyName == "pacifierText") {
-			pacifierText.setTexture(&value);
+			mText.setTexture(&value);
 		}
 	}
 }
@@ -65,27 +43,12 @@ void Pacifier::setTexture(std::map<std::string, const sf::Texture, std::less<>>&
 void Pacifier::setSoundBuffer(std::map<std::string, const sf::SoundBuffer, std::less<>>& soundBuffers) {
 	for (auto const& [key, value] : soundBuffers) {
 		if (key == "babydie"sv) {
-			mPacifierSound.setBuffer(value);
+			mSound.setBuffer(value);
 		}
 	}
-	mPacifierSound.setVolume(50);
+	mSound.setVolume(50);
 }
 
-/// <summary>
-/// retourne la position (x,y) du sprite de la tétine
-/// </summary>
-/// <returns></returns>
-sf::Vector2f Pacifier::getPos() {
-	return wShape.getPosition();
-}
-
-/// <summary>
-/// retourne la taille (width,height) du sprite de la tétine
-/// </summary>
-/// <returns></returns>
-sf::Vector2f Pacifier::getSiz() {
-	return wShape.getSize();
-}
 
 /// <summary>
 /// retourne un booléen valant true si le joueur peut passer au niveau suivant
@@ -142,6 +105,6 @@ void Pacifier::handlePlayerInput(const sf::Keyboard::Key& key, const bool& isPre
 	//si le joueur est proche et qu'il a cliqué sur la touche indiquée, on passe au niveau suivant
 	if ((key == sf::Keyboard::E) && isNear && isPressed) {
 		nextLevel = true;
-		mPacifierSound.play();
+		mSound.play();
 	}
 }

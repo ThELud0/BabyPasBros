@@ -30,7 +30,7 @@ InteractibleUnmoving::InteractibleUnmoving(const pugi::xml_node& node) : Unmovin
 void InteractibleUnmoving::drawCurrent(sf::RenderWindow& window) const {
 	window.draw(wShape);
 	//si la porte est fermée et le joueur proche de la porte, le texte pour l'ouvrir s'affiche
-	if (isNear && physical) {
+	if (isNear) {
 		window.draw(mText);
 	}
 }

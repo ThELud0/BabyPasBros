@@ -32,7 +32,7 @@
 			<Wall x="2400" y="100" h="100" w="100" vertical="false"/>
 			<Wall x="2500" y="100" h="100" w="100" vertical="false"/>
 
-			<Pacifier x="2300" y="-100" h="196" w="184"/>
+			<Pacifier x="300" y="300" h="196" w="184"/>
 
 		</Niveau>
 
