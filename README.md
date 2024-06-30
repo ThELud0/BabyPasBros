@@ -65,12 +65,12 @@ Ajouter à la classe Door:
 * une méthode unlocks() {if (isNear && !isUnlocked){isUnlocked = true} return isUnlocked}.
 
 Dans la classe Group, méthode Group::handlePlayerEvent(), implémenter deux itérateurs imbriqués:
-'for (auto obj1:children){
-|   for (auto obj2:children) {...} 
+'for (auto obj1:children){\
+|   for (auto obj2:children) {...} \
 }' 
 et dans '...', appliquer les conditions et méthodes suivantes : 
-si ( (obj->needs() == obj2) -> lootType() && !(obj2 -> isUsed()) && (obj2 -> isFound()) ) alors 
-|   si (obj->unlocks()) alors 
+si ( (obj->needs() == obj2) -> lootType() && !(obj2 -> isUsed()) && (obj2 -> isFound()) ) alors \
+|   si (obj->unlocks()) alors \
 |   |   obj2 -> isUsed() et obj -> handlePlayerEvent()
 
 L'intéraction du joueur qui ramasse la clé se fait similairement à celle avec la tétine, et le joueur met à ce moment Cle::isPickedUp à true.
