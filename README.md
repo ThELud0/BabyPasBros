@@ -67,7 +67,7 @@ Ajouter à la classe Door:
 Dans la classe Group, méthode Group::handlePlayerEvent(), implémenter deux itérateurs imbriqués:
 'for (auto obj1:children){\
 |   for (auto obj2:children) {...} \
-}' 
+}' \
 et dans '...', appliquer les conditions et méthodes suivantes : 
 si ( (obj->needs() == obj2) -> lootType() && !(obj2 -> isUsed()) && (obj2 -> isFound()) ) alors \
 |   si (obj->unlocks()) alors \
