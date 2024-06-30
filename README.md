@@ -32,9 +32,9 @@ Dans classe Entity:
 La classe UnmovingEntity renvoie false par défaut pour isHit(...).
 
 Ajouter une classe Monstre dérivée de Entity:
-Monstre::collide(...) met alors Monstre::Hit à true quand le joueur est considéré touché par un monstre ou son attaque et par défaut, Monstre::Hit est remis à false à la fin de la méthode Monstre::update.
+Monstre::collide(...) met alors Monstre::Hit à true quand le joueur est considéré touché par un monstre ou son attaque et par défaut, Monstre::Hit est remis à false à la fin de la méthode Monstre::update(...).
 
-Dans la classe Player, implémenter Player::isHit(bool &trueOrFalse) pour faire une action lorsque trueOrFalse = true donc lejoueur est touché.
+Dans la classe Player, implémenter Player::isHit(bool &trueOrFalse) pour faire une action lorsque trueOrFalse = true donc le joueur est touché.
 Dans la méthode Group::isHit(…), Group::mainCharacter appelle alors isHit(bool child->Hits()) où child est le pointeur de l'itérateur 'auto child : children' qui parcourt 'children' (vecteur contenant toutes les Entity du niveau).
 
 ## Implémentation d'un système de clés
@@ -66,12 +66,12 @@ Ajouter à la classe Door:
 
 Dans la classe Group, méthode Group::handlePlayerEvent(), implémenter deux itérateurs imbriqués:
 'for (auto obj1:children){
-    for (auto obj2:children) {...} 
-    }' 
+|   for (auto obj2:children) {...} 
+}' 
 et dans '...', appliquer les conditions et méthodes suivantes : 
 si ( (obj->needs() == obj2) -> lootType() && !(obj2 -> isUsed()) && (obj2 -> isFound()) ) alors 
-    si (obj->unlocks()) alors 
-          obj2 -> isUsed() et obj -> handlePlayerEvent()
+|   si (obj->unlocks()) alors 
+|   |   obj2 -> isUsed() et obj -> handlePlayerEvent()
 
 L'intéraction du joueur qui ramasse la clé se fait similairement à celle avec la tétine, et le joueur met à ce moment Cle::isPickedUp à true.
 
