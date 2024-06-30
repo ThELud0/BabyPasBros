@@ -60,7 +60,7 @@ Ajouter une classe Cle dérivée de InteractiveUnmoving (car celle-ci avant d'ê
 * une méthode lootType() {return Object::Key} override \
 et ajouter toutes les instances de Cle au fichier 'monde.xml' puis modifier le constructeur de Group pour que toutes les clés soient ajoutées dans Group::children.
 
-Ajouter à la classe Door: \
+Ajouter à la classe Door:
 * une méthode Object Door::needs() {return enum Object::Key} override
 * un attribut bool isUnlocked{false}
 * une méthode unlocks() {if (isNear && !isUnlocked){isUnlocked = true} return isUnlocked}.
