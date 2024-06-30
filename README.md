@@ -31,7 +31,7 @@ Dans classe Entity:
 
 La classe UnmovingEntity renvoie false par défaut pour isHit(...).
 
-Ajouter une classe Monstre dérivée de Entity:\
+Ajouter une classe Monstre dérivée de Entity: \
 Monstre::collide(...) met alors Monstre::Hit à true quand le joueur est considéré touché par un monstre ou son attaque et par défaut, Monstre::Hit est remis à false à la fin de la méthode Monstre::update(...).
 
 Dans la classe Player, implémenter Player::isHit(bool &trueOrFalse) pour faire une action lorsque trueOrFalse = true donc le joueur est touché.
@@ -56,17 +56,17 @@ Dans Entity, ajouter :
 * un attribut bool isUsed{false} avec une méthode isUSed() {return &isUsed}
 * un attribut bool isPickedUp{false} avec une méthode isPickedUp() {return &isPickedUp}
 
-Ajouter une classe Cle dérivée de InteractiveUnmoving (car celle-ci avant d'être ramassée se comportera comme une tétine (classe Pacifier --|> InteractiveUnmoving) c'est à dire immobile dans le niveau et à l'approche du bébé, un texte apparaît pour indiquer qu'il peut la ramasser) avec:\
-* une méthode lootType() {return Object::Key} override\
+Ajouter une classe Cle dérivée de InteractiveUnmoving (car celle-ci avant d'être ramassée se comportera comme une tétine (classe Pacifier --|> InteractiveUnmoving) c'est à dire immobile dans le niveau et à l'approche du bébé, un texte apparaît pour indiquer qu'il peut la ramasser) avec:
+* une méthode lootType() {return Object::Key} override \
 et ajouter toutes les instances de Cle au fichier 'monde.xml' puis modifier le constructeur de Group pour que toutes les clés soient ajoutées dans Group::children.
 
-Ajouter à la classe Door:\
+Ajouter à la classe Door: \
 * une méthode Object Door::needs() {return enum Object::Key} override
 * un attribut bool isUnlocked{false}
 * une méthode unlocks() {if (isNear && !isUnlocked){isUnlocked = true} return isUnlocked}.
 
-Dans la classe Group, méthode Group::handlePlayerEvent(), implémenter deux itérateurs imbriqués:\
-'for (auto obj1:children){\
+Dans la classe Group, méthode Group::handlePlayerEvent(), implémenter deux itérateurs imbriqués: \
+'for (auto obj1:children){ \
 |   for (auto obj2:children) {...} \
 }' \
 et dans '...', appliquer les conditions et méthodes suivantes : \
