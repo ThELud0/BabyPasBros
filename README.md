@@ -1,5 +1,8 @@
 ﻿# BabyPasBros
 
+Ce projet a été réalisé par Teddy BOULANGER et Ludovic HU dans le cadre d'un cours de programmation en C++.
+Sujet: coder un jeu en C++, implémentant au moins deux librairies externes différentes (ici SFML et pugixml) et de l'audio.
+
 Dans "BabyPasBros", le joueur vient en aide à un bébé en l'aidant à accomplir la quête ultime de ses rêves, 
 dans ses rêves: récupérer sa tétine perdue! Pour cela, il devra naviguer le monde des nuages, l'explorer et surmonter
 les obstacles qui s'y trouvent...
